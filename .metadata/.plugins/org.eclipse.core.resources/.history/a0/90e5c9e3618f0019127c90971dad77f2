@@ -1,0 +1,7 @@
+package com.cts.iiht.model;
+
+public class ParentTask {
+	int parent_id;
+	String parent_task;
+
+}

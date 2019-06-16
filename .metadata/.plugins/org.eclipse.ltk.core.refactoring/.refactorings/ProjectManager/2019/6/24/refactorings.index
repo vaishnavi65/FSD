@@ -1,0 +1,13 @@
+1560543114597	Rename resource 'index.jsp'
+1560597458288	Rename package 'com.cts.iiht.contrlloer'
+1560615517373	Rename package 'com.cts.iiht.repository'
+1560615575152	Rename package 'com.cts.iiht.service.impl'
+1560630950644	Rename field 'env'
+1560631268710	Delete element
+1560634454059	Rename field 'parent_id'
+1560639817898	Move 'index.html' to 'META-INF'
+1560639828822	Move 'index.html' to 'WEB-INF'
+1560640412209	Move 'index.html' to 'static'
+1560640898691	Move 'index.html' to 'resources'
+1560641022275	Move 'index.html' to 'static'
+1560642936534	Move 'index.html' to 'views'

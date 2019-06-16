@@ -1,0 +1,25 @@
+package com.cts.iiht.controller;
+import java.util.List;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cts.iiht.model.Project;
+import com.cts.iiht.service.ProjectService;
+@RestController
+@RequestMapping("project")
+public class ProjectManagerController {
+	private static final Logger logger = Logger.getLogger(ProjectManagerController.class);
+	@Autowired
+	private  ProjectService service;
+	@GetMapping(value="details")
+	public List<Project> getPersonDetails() {
+		List<Project> projects = service.getAllProjectData();
+		logger.debug("project details are "+projects);
+		return projects;
+ 	}
+}
+
+

@@ -1,0 +1,29 @@
+package com.cts.iiht.controller;
+import java.util.List;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.MediaType;
+
+import com.cts.iiht.model.Project;
+import com.cts.iiht.service.ProjectService;
+@RestController
+@RequestMapping(value="project", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+public class ProjectManagerController {
+	private static final Logger logger = Logger.getLogger(ProjectManagerController.class);
+	@Autowired
+	private  ProjectService service;
+	@GetMapping(value="details")
+	public ResponseEntity<List<Project>> getProjectDetails() {
+		List<Project> projects = service.getAllProjectData();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);;
+ 	}
+}
+
+

@@ -1,0 +1,29 @@
+package com.cts,iiht.service;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+
+import com.cts.iiht.model.*;
+
+
+@Configuration
+@ImportResource({"classpath*:beans.xml"})
+public class ApplicationConfig {
+
+
+	@Bean
+	public Project project() {
+		return new Project();
+	}
+	
+	@Bean
+	public Task task() {
+		return new Task();
+	}
+	
+	@Bean
+	public ParentTask parentTask() {
+		return new ParentTask();
+	}
+}
