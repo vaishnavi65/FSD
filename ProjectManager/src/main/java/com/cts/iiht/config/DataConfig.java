@@ -50,8 +50,8 @@ public class DataConfig {
 	Properties hibernateProps() {
 		Properties properties = new Properties();
 		properties.setProperty(PROPERTY_DIALECT, env.getProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-        properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+        properties.put(PROPERTY_SHOW_SQL, env.getProperty("hibernate.show_sql"));
+        properties.put(PROPERTY_FORMAT_SQL, env.getProperty("hibernate.format_sql"));
 		return properties;
 	}
 
