@@ -1,3 +1,6 @@
 .metadata
 .recommenders
 Servers
+ProjectManager/.settings
+ProjectManager/.classpath
+ProjectManager/.project
