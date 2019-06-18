@@ -1,5 +1,18 @@
-<html>
+<!doctype html>
+<html ng-app="myApp">
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.1/angular2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.1/router.js"></script>
+<link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+</head>
 <body>
-<h2>Hi</h2>
+<H1>Project Manager</H1>
+<BR>
+<a href="#/project">Add Project</a>
+<a href="#/task">Add Task</a>
+<a href="#/user">Add User</a>
+<a href="#/vTask">View Task</a>
+<div ng-view></div>
+<script src="app.js"></script>
 </body>
 </html>

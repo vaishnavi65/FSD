@@ -23,13 +23,4 @@ http://www.springframework.org/schema/beans
 		max-age="123" />
 </mvc:cors>
 <mvc:default-servlet-handler/>
-<!--  <bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/WEB-INF/views/</value>
-		</property>
-		<property name="suffix">
-			<value>.html</value>
-		</property>
-	</bean>-->
 </beans>
