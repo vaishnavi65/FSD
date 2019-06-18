@@ -1,7 +1,0 @@
-INDEX VERSION 1.131
-C:\Users\vaish\OneDrive\Desktop\FSD\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2813442466.index
-\ProjectManager\src\main\resources
-C:\Users\vaish\OneDrive\Desktop\FSD\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1231705889.index
-\ProjectManager\src\main\java
-C:\Users\vaish\OneDrive\Desktop\FSD\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1849512057.index
-\ProjectManager\src\main\java
