@@ -1,0 +1,31 @@
+input[type="text"] {
+  display: inline-block;
+  margin-bottom: 0px;
+  background-color: Gainsboro;
+  border: 0px none;
+}
+u {
+  text-decoration: underline;
+}
+input[type="submit"] ,input[type="reset"] {
+    background:lightgrey; 
+	border:1px;
+	font-family:'Verdana';
+	font-style: italic;
+	border-style: solid;
+}
+form{
+	  margin-top: 10px;
+}
+button{
+	background:lightgrey; 
+	border:1px;
+	font-family:'Verdana';
+	font-style: italic;
+	border-style: solid;
+}
+hr {
+width: 50%;
+margin-left: 0px;
+}
+;

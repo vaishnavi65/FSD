@@ -32,6 +32,13 @@ public class ProjectManagerController {
 		logger.debug("project details are "+projects);
 		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
  	}
+	
+	@RequestMapping(value="/user/addUser", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Project>> addAnUser() {
+		List<Project> projects = service.getAllProjectData();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+ 	}
 }
 
 
