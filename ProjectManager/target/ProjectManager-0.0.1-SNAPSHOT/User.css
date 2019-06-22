@@ -25,7 +25,6 @@ button{
 	border-style: solid;
 }
 hr {
-width: 50%;
-margin-left: 0px;
+  display: inline-block;
 }
 ;

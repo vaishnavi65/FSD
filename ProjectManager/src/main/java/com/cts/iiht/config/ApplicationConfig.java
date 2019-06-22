@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Task;
+import com.cts.iiht.model.Users;
 
 
 @Configuration
@@ -39,4 +40,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	public ParentTask parentTask() {
 		return new ParentTask();
 	}
+	
+	@Bean
+	public Users user() {
+		return new Users();
+	}
+	
 }

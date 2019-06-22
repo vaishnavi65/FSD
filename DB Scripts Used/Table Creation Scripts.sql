@@ -48,10 +48,10 @@ CREATE TABLE IF NOT EXISTS task (
    -- drop table users
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    employee_id INT UNIQUE NOT NULL,
-    project_id INT NOT NULL,
-    task_id INT NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    employee_id INT,
+    project_id INT,
+    task_id INT,
     PRIMARY KEY (user_id)
 ) ;

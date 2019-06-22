@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="project_id")
+	@Column(name="project_id",insertable=false, updatable=false)
 	Integer project_id;
 	@Column(name="project")
 	String project;

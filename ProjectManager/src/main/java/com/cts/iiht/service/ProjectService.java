@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cts.iiht.dao.ProjectDAO;
 import com.cts.iiht.model.Project;
+import com.cts.iiht.model.Users;
 
 @Service
 public class ProjectService {
@@ -15,4 +16,14 @@ public class ProjectService {
 	public List<Project> getAllProjectData() {
 		return projectDAO.getAllProjects();
 	}
+	/*
+	@Autowired
+	public void addProject(Project project) {
+		//projectDAO.addProject(project);
+	}
+	
+	@Autowired
+	public void updateProject(Project project) {
+		//projectDAO.updateProject(project);
+	} */
 } 
