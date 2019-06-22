@@ -84,24 +84,23 @@ public class ProjectManagerController {
 		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
  	}
 	
-	@RequestMapping(value="/user/add", method = RequestMethod.POST)
-	 public String addUser(@Valid Users user, BindingResult result,
-	            ModelMap model) throws IOException, SQLException {
-		        userService.addUser(user);
-		        model.addAttribute("success", "User " + user.getFirst_name() + " "+ user.getLast_name() + " registered successfully");
-				return "Success";
+	@RequestMapping(value="/user/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	 public Users addUser(@RequestBody Users user) throws IOException, SQLException {
+		        logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
+		        return userService.addUser(user);
 		    }
-	/*@RequestMapping(value = "/user/update{userId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/user/update", method = RequestMethod.PUT)
 	public String updateUser(@Valid Users user, BindingResult result,
-            ModelMap model, @PathVariable String userID) {		
+            ModelMap model) {		
 		
-		userService.updateUser(user,userID);
+		userService.updateUser(user);
 		return "Success";
 	}
-	/*@RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
-	public ResponseEntity<Users> findUserByName(@PathVariable String name, @RequestBody Users user) {
-		String first_name=name;
-		Users currentUser = userService.findByFirstName(first_name);
+/*	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Users> findUserById(@PathVariable("id") int id) {
+		//String first_name=name;
+		Users currentUser=new Users();
+		currentUser = userService.findById(id);
 		
 		if (currentUser==null) {
 			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
