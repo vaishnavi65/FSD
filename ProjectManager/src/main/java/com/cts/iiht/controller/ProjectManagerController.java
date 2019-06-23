@@ -89,12 +89,24 @@ public class ProjectManagerController {
 		        logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
 		        return userService.addUser(user);
 		    }
-	@RequestMapping(value = "/user/update", method = RequestMethod.PUT)
-	public String updateUser(@Valid Users user, BindingResult result,
-            ModelMap model) {		
-		
+	@RequestMapping(value = "/user/update", method = RequestMethod.PUT,headers = "Accept=application/json")
+	public String updateUser(@RequestBody Users user) throws IOException, SQLException {	
+		logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
 		userService.updateUser(user);
 		return "Success";
+	}
+	@RequestMapping(value = "/user/delete", method = RequestMethod.DELETE,headers = "Accept=application/json")
+	public String deleteUser(@RequestBody Users user) throws IOException, SQLException {		
+		logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
+		userService.deleteUser(user);
+		return "Success";
+	}
+	/*
+    @RequestMapping(value = "/user/detail/{id}", method = RequestMethod.GET,headers = "Accept=application/json")
+	public ResponseEntity<Users> findUserById(@PathVariable("id") int id) {
+    	Users users = userService.findById(id);
+		logger.debug("project details are "+users);
+		return new ResponseEntity<Users>(users,HttpStatus.OK);
 	}
 /*	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Users> findUserById(@PathVariable("id") int id) {

@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="User.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <title>Adding an user</title>
 </head>
 <body ng-app="UserManagement" ng-controller="UserController">
@@ -12,7 +13,7 @@
  				<B>First Name:</B>
 			</td>
 			<td>
-				<input type="text" name="firstname" size="30" ng-model="userForm.first_name"><br>			
+				<input type="text" name="firstname" size="30" ng-model="first_name"><br>			
 			</td>
 		</tr>
 		<tr>
@@ -20,7 +21,7 @@
  				<B>Last Name:</B>
 			</td>
 			<td>
-				<input type="text" name="lastname"  size=30 ng-model="userForm.last_name"><br>			
+				<input type="text" name="lastname"  size=30 ng-model="last_name"><br>			
 			</td>
 		</tr>
 		<tr>
@@ -28,15 +29,15 @@
  				<B>Employee ID:</B>
 			</td>
 			<td>
-				<input type="text" name="employeeID"  size="10" ng-model="userForm.employee_id"><br>			
+				<input type="text" name="employeeID"  size="10" ng-model="employee_id"><br>			
 			</td>
 		</tr>
 		<tr>
 			<td>
 			</td>
 			<td align="right">
-				<input type="submit" value="    Add    " ng-submit="submitUser()">
-  				<input type="reset" value="   Reset   " ng-submit="resetUser()">			
+				<input name="doAdd" type="submit" value="    Add    " ng-click="submitUser()">
+  				<input name="doReset" type="reset" value="   Reset   " ng-click="resetUser()">						
 			</td>
 		</tr>
 	</table>
@@ -57,45 +58,107 @@
 	<hr style="border-top: dotted 1px;" width="18%"></hr>
 </div>
 </form>
-<script type="text/javascript">
+<form>
+<div  ng-repeat="user in users">
+    <input type="text" name="resFirstName"  size=30 value=" {{ user.first_name }}">
+    <input name="doEdit"type="submit" ng-click="doEdit(user)"  value="  Edit ">
+    <br>
+    <input type="text" name="resLastName"  size=30 value=" {{ user.last_name }}">
+    <input name="doDelete" type="submit" ng-click="doDelete(user)"  value="Delete">
+    <br>           
+    <input type="text" name="resEmployeeId"  size=30 value=" {{ user.employee_id }}"> 
+    <BR>
+    <hr style="border-top: dotted 1px;" width="18%"></hr>
+</div>
+</form>
+<script>
  var app = angular.module("UserManagement", []);
          
             //Controller Part
             app.controller("UserController", function($scope, $http) {
+            	$scope.onloadFun = function() {
+            		 _refreshUserData();
+                  };
+            	$scope.resetUser = function() {
+            		_clearFormData();
+                 };
+            	$scope.doEdit = function(user) {
+            		$scope.first_name=user.first_name;
+            		$scope.last_name=user.last_name;
+            		$scope.employee_id=user.employee_id;
+            		$scope.doAdd="Update";
+                 };
+                 $scope.doDelete = function(user) {
+                	 var fname=user.first_name;
+                	 var lname=user.last_name;
+                	 var id=user.employee_id;
+                	 console.log(fname);
+                	 var method = "DELETE";
+	                    var url = 'http://localhost:8090/ProjectManager/user/delete';
+	                	   var data = {
+	                		  first_name: fname,
+	                		 last_name: lname,
+	                		employee_id:id,
+	                		project_id: 0,
+	                	    task_id: 0
+	                   };
+	                	 $http({
+	                        method : method,
+	                        url : url,
+	                        data :  JSON.stringify(data),
+	                        headers : {
+	                            'Content-Type' : 'application/json'
+	                        }
+	                    }).then( _success, _error );
+                  };
+         				                $scope.submitUser = function() {
+         				                	var method = "POST";
+         				                    var url = 'http://localhost:8090/ProjectManager/user/add';
+         				                	   var data = {
+         				                		  first_name: $scope.first_name,
+         				                		 last_name: $scope.last_name,
+         				                		employee_id:$scope.employee_id,
+         				                		project_id: 0,
+         				                	    task_id: 0
+         				                   };
+         				                	 $http({
+         				                        method : method,
+         				                        url : url,
+         				                        data :  JSON.stringify(data),
+         				                        headers : {
+         				                            'Content-Type' : 'application/json'
+         				                        }
+         				                    }).then( _success, _error );
+         				                };
+         				               function _refreshUserData() {
+         				                    $http({
+         				                        method : 'GET',
+         				                        url : 'http://localhost:8090/ProjectManager/user/details'
+         				                    }).then(function successCallback(response) {
+         				                        $scope.users = response.data;
+         				                    }, function errorCallback(response) {
+         				                        console.log(response.statusText);
+         				                    });
+         				                }
+         				               function _success(response) {
+         				                    _refreshUserData();
+         				                    _clearFormData()
+         				                }
+         				         
+         				                function _error(response) {
+         				                	 _refreshUserData();
+         				                    console.log(response.statusText);
+         				                }
+         				         
+         				                //Clear the form
+         				                function _clearFormData() {
+         				                    $scope.first_name="";
+         				                    $scope.last_name = "";
+         				                    $scope.employee_id = "";
+         				                
+         				                };
          
-               
-                $scope.userForm = {
-                    "first_name":"",
-					"last_name": "",
-					"employee_id":0 ,
-					"project_id": 0,
-					"task_id": 0
-				};
-				
-				                $scope.submitUser = function() {
-         
-                    var method = "";
-                    var url = "";
-                    if ($scope.userForm.id == -1) {
-                        //Id is absent in form data, it is create new country operation
-                        method = "POST";
-                        url = '/user/add';
-                    } else {
-                        //Id is present in form data, it is edit country operation
-                        method = "PUT";
-                        url = '/user/update';
-                    }
-         
-                    $http({
-                        method : method,
-                        url : url,
-                        data : angular.toJson($scope.userForm),
-                        headers : {
-                            'Content-Type' : 'application/json'
-                        }
-                    }).then( _success, _error );
-                };
-			});
+         				                });
 </script>
 </body>
 </html>

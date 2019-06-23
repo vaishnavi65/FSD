@@ -36,14 +36,20 @@ public class UserService {
 		
 	}
 	
-	/*@Autowired
+	@Autowired
+	public void deleteUser(Users user) {
+		 userDAO.deleteUser(user);
+		
+	}
+	/*
+	@Autowired
 	public Users findById(int id)
 	{
 		return userDAO.findById(id);
 	}
-	
-	/*@Autowired
-	public Users findByFirstName(String first_name)
+	/*
+	@Autowired
+	public List<Users> findByFirstName(String first_name)
 	{
 		return userDAO.findByFirstName(first_name);
 	}*/
