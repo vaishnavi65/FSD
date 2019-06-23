@@ -19,6 +19,8 @@ insert into users values(2,'Ram','Sharma',2,2,2);
 insert into users values(3,'Mike','Cook',3,3,3);
 select * from users;
 
+delete from users
+
 
 
 

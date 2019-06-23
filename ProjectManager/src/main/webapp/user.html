@@ -36,7 +36,7 @@
 			<td>
 			</td>
 			<td align="right">
-				<input name="doAdd" type="submit" value="    Add    " ng-click="submitUser()">
+				<input name="doAdd" type="submit" value="{{ in_value}}" ng-click="submitUser()">
   				<input name="doReset" type="reset" value="   Reset   " ng-click="resetUser()">						
 			</td>
 		</tr>
@@ -48,18 +48,18 @@
 </div>
 <form>
 <div>
-	<input type="text" name="lastname"  size="10" value="Search....">
+	<input type="text" name="lastname"  size="10" placeholder="Search...." ng-model="searchText">
 	<font face="verdana" size="1"><I>  Sort:</I></font>
-	<button type="button">First Name</button>
-	<button type="button">Last Name</button>
-	<button type="button">Id</button>
+	<input name="searchByFName" type="submit" ng-click="doSortByFName()"  value="  First Name ">
+	<input name="searchByLName"type="submit" ng-click="doSortByLName()"  value="  Last Name ">
+	<input name="searchByID"type="submit" ng-click="doSortById()"  value="  Id ">
 	</div>
 <div>
 	<hr style="border-top: dotted 1px;" width="18%"></hr>
 </div>
 </form>
 <form>
-<div  ng-repeat="user in users">
+<div  ng-repeat="user in users|filter:searchText">
     <input type="text" name="resFirstName"  size=30 value=" {{ user.first_name }}">
     <input name="doEdit"type="submit" ng-click="doEdit(user)"  value="  Edit ">
     <br>
@@ -76,9 +76,8 @@
          
             //Controller Part
             app.controller("UserController", function($scope, $http) {
-            	$scope.onloadFun = function() {
-            		 _refreshUserData();
-                  };
+            	 _refreshUserData();
+            	 $scope.in_value="    Add    ";
             	$scope.resetUser = function() {
             		_clearFormData();
                  };
@@ -86,7 +85,8 @@
             		$scope.first_name=user.first_name;
             		$scope.last_name=user.last_name;
             		$scope.employee_id=user.employee_id;
-            		$scope.doAdd="Update";
+            		$scope.in_value="  Update  ";
+            		
                  };
                  $scope.doDelete = function(user) {
                 	 var fname=user.first_name;
@@ -129,7 +129,41 @@
          				                            'Content-Type' : 'application/json'
          				                        }
          				                    }).then( _success, _error );
+         				                	_clearFormData()
          				                };
+         				               $scope.doSortByFName= function() 
+         				               {
+         				            	  $http({
+       				                        method : 'GET',
+       				                        url : 'http://localhost:8090/ProjectManager/user/serachByFName'
+       				                    }).then(function successCallback(response) {
+       				                        $scope.users = response.data;
+       				                    }, function errorCallback(response) {
+       				                        console.log(response.statusText);
+       				                    });
+         				               };
+         				              $scope.doSortByLName = function() 
+         				              {
+         				            	 $http({
+      				                        method : 'GET',
+      				                        url : 'http://localhost:8090/ProjectManager/user/serachByLName'
+      				                    }).then(function successCallback(response) {
+      				                        $scope.users = response.data;
+      				                    }, function errorCallback(response) {
+      				                        console.log(response.statusText);
+      				                    });
+         				              };
+         				             $scope.doSortById= function() 
+         				             {
+         				            	 $http({
+      				                        method : 'GET',
+      				                        url : 'http://localhost:8090/ProjectManager/user/serachById'
+      				                    }).then(function successCallback(response) {
+      				                        $scope.users = response.data;
+      				                    }, function errorCallback(response) {
+      				                        console.log(response.statusText);
+      				                    });
+         				             };
          				               function _refreshUserData() {
          				                    $http({
          				                        method : 'GET',
@@ -155,7 +189,7 @@
          				                    $scope.first_name="";
          				                    $scope.last_name = "";
          				                    $scope.employee_id = "";
-         				                
+         				                   $scope.in_value="    Add    ";
          				                };
          
          				                });

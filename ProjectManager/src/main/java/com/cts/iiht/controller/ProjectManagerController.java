@@ -83,6 +83,24 @@ public class ProjectManagerController {
 		logger.debug("project details are "+users);
 		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
  	}
+	@RequestMapping(value="/user/serachByFName", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Users>> serachByFName() {
+		List<Users> users = userService.serachByFName();
+		logger.debug("project details are "+users);
+		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/user/serachByLName", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Users>> serachByLName() {
+		List<Users> users = userService.serachByLName();
+		logger.debug("project details are "+users);
+		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/user/serachById", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Users>> serachById() {
+		List<Users> users = userService.serachById();
+		logger.debug("project details are "+users);
+		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
+ 	}
 	
 	@RequestMapping(value="/user/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	 public Users addUser(@RequestBody Users user) throws IOException, SQLException {

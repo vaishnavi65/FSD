@@ -23,6 +23,15 @@ public class UserService {
 	public List<Users> getAllUsers() {
 		return userDAO.getAllUsers();
 	}
+	public List<Users> serachByFName() {
+		return userDAO.serachByFName();
+	}
+	public List<Users> serachByLName() {
+		return userDAO.serachByLName();
+	}
+	public List<Users> serachById() {
+		return userDAO.serachById();
+	}
 
 	@Autowired
 	public Users addUser(Users user) {
