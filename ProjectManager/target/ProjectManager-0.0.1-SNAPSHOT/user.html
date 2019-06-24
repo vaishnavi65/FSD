@@ -13,7 +13,7 @@
  				<B>First Name:</B>
 			</td>
 			<td>
-				<input type="text" name="firstname" size="30" ng-model="first_name"><br>			
+				<input type="text" name="firstname" size="30" ng-model="first_name" required><br>			
 			</td>
 		</tr>
 		<tr>
@@ -21,7 +21,7 @@
  				<B>Last Name:</B>
 			</td>
 			<td>
-				<input type="text" name="lastname"  size=30 ng-model="last_name"><br>			
+				<input type="text" name="lastname"  size=30 ng-model="last_name" required><br>			
 			</td>
 		</tr>
 		<tr>
@@ -29,7 +29,7 @@
  				<B>Employee ID:</B>
 			</td>
 			<td>
-				<input type="text" name="employeeID"  size="10" ng-model="employee_id"><br>			
+				<input type="text" name="employeeID"  size="10" ng-model="employee_id" required><br>			
 			</td>
 		</tr>
 		<tr>
@@ -48,7 +48,7 @@
 </div>
 <form>
 <div>
-	<input type="text" name="lastname"  size="10" value="Search....">
+	<input type="text" name="lastname"  size="10" placeholder="Search...." ng-model="searchText">
 	<font face="verdana" size="1"><I>  Sort:</I></font>
 	<input name="searchByFName" type="submit" ng-click="doSortByFName()"  value="  First Name ">
 	<input name="searchByLName"type="submit" ng-click="doSortByLName()"  value="  Last Name ">
@@ -59,7 +59,7 @@
 </div>
 </form>
 <form>
-<div  ng-repeat="user in users">
+<div  ng-repeat="user in users|filter:searchText">
     <input type="text" name="resFirstName"  size=30 value=" {{ user.first_name }}">
     <input name="doEdit"type="submit" ng-click="doEdit(user)"  value="  Edit ">
     <br>
@@ -129,6 +129,7 @@
          				                            'Content-Type' : 'application/json'
          				                        }
          				                    }).then( _success, _error );
+         				                	_clearFormData()
          				                };
          				               $scope.doSortByFName= function() 
          				               {
@@ -188,7 +189,7 @@
          				                    $scope.first_name="";
          				                    $scope.last_name = "";
          				                    $scope.employee_id = "";
-         				                
+         				                   $scope.in_value="    Add    ";
          				                };
          
          				                });

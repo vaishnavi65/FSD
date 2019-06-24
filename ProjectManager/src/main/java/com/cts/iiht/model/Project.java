@@ -24,7 +24,7 @@ public class Project {
 	@Column(name="priority")
 	Integer priority;
 	@Column(name="status")
-	Integer status;
+	String status;
 	public String getProject() {
 		return project;
 	}
@@ -55,10 +55,10 @@ public class Project {
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

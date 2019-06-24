@@ -55,28 +55,48 @@ public class ProjectManagerController {
 		logger.debug("project details are "+projects);
 		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
  	}
+	@RequestMapping(value="/project/sortBySDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Project>> sortBySDate() {
+		List<Project> projects = projectService.sortBySDate();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/project/sortByEDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Project>> sortByEDate() {
+		List<Project> projects = projectService.sortByEDate();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/project/sortByPriority", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Project>> serachByPriority() {
+		List<Project> projects = projectService.sortByPriority();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/project/sortByCompletion", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Project>> sortByCompletion() {
+		List<Project> projects = projectService.sortByCompletion();
+		logger.debug("project details are "+projects);
+		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+ 	}
 	
-	/*@RequestMapping(value="/project/add", method = RequestMethod.POST)
-	 public ResponseEntity<Void> submitProject(@Valid @ModelAttribute("user")Project project, 
-		      BindingResult result, ModelMap model) throws IOException, SQLException {
+	@RequestMapping(value="/project/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	 public void addUser(@RequestBody Project project) throws IOException, SQLException {
+		        logger.debug("project details"+project.getProject());
 		        projectService.addProject(project);
-				model.addAttribute("project", project.setProject());
-				model.addAttribute("start_date", user.getLast_name());
-				model.addAttribute("end_date", user.getEmployee_id());
-				model.addAttribute("priority", user.getEmployee_id());
-				model.addAttribute("status", user.getEmployee_id());
-		        return "Project Added";
 		    }
-	@RequestMapping(value="/project/update", method = RequestMethod.POST)
-	 public String updateProject(@Valid @ModelAttribute("user")Users user, 
-		      BindingResult result, ModelMap model) throws IOException, SQLException {
-		        userService.updateUser(user);
-				model.addAttribute("first_name", user.getFirst_name());
-				model.addAttribute("last_name", user.getLast_name());
-				model.addAttribute("employee_id", user.getEmployee_id());
-		        return "User Added";
-		    }*/
-	
+	@RequestMapping(value = "/project/update", method = RequestMethod.PUT,headers = "Accept=application/json")
+	public String updateUser(@RequestBody Project project) throws IOException, SQLException {	
+		logger.debug("User details"+project.getProject());
+		projectService.updateProject(project);
+		return "Success";
+	}
+	/*@RequestMapping(value = "/project/suspend", method = RequestMethod.PUT,headers = "Accept=application/json")
+	public String deleteUser(@RequestBody Project project) throws IOException, SQLException {		
+		logger.debug("project details"+project.getProject());
+		projectService.suspendProject(project);
+		return "Success";
+	}*/
 	@RequestMapping(value="/user/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Users>> getAllUsers() {
 		List<Users> users = userService.getAllUsers();

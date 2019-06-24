@@ -20,17 +20,53 @@ public class ProjectDAO {
     private SessionFactory sessionFactory;
 	@SuppressWarnings("unchecked")
 	public List<Project> getAllProjects() {
-		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p order by project_id asc").list();
+		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id is not null order by p.project_id asc").list();
+		return (List<Project>) list;
+	}
+	public List<Project> sortBySDate() {
+		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id is not null order by p.start_date asc").list();
+		return (List<Project>) list;
+	}
+	public List<Project> sortByEDate() {
+		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id is not null order by p.end_date asc").list();
+		return (List<Project>) list;
+	}
+	public List<Project> sortByPriority() {
+		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id is not null order by p.priority asc").list();
+		return (List<Project>) list;
+	}
+	public List<Project> sortByCompletion() {
+		List<?> list = sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id is not null and p.status='Completed' order by p.start_date asc").list();
 		return (List<Project>) list;
 	}
 	@SuppressWarnings("unchecked")
 	public void addProject(Project project) {
-		sessionFactory.getCurrentSession().persist(project);
+		List<?> list =sessionFactory.getCurrentSession()
+				.createQuery("SELECT p FROM Project p where p.project=:proj")
+				.setParameter("proj", project.getProject()).list();
+		if(list.isEmpty())
+		{
+		sessionFactory.getCurrentSession().save(project);
+		}
+		else
+		{
+			updateProject(project);
+		}
 		
 	}
 	@SuppressWarnings("unchecked")
 	public void updateProject(Project project) {
-		sessionFactory.getCurrentSession().merge(project);
+		this.sessionFactory.getCurrentSession()
+		.createQuery("UPDATE Project p set p.start_date=:sDate,p.end_date=:eDate,p.priority=:priority,p.status=:status where p.project=:proj")
+		.setParameter("sDate", project.getStart_date()).setParameter("eDate", project.getEnd_date())
+		.setParameter("priority", project.getPriority()).setParameter("status", project.getStatus())
+		.setParameter("proj", project.getProject()).executeUpdate();
+		
+	}
+	public void suspendProject(Project project) {
+		this.sessionFactory.getCurrentSession()
+		.createQuery("UPDATE Project p set p.status=\'Closed\' where p.project=:proj")
+		.setParameter("proj", project.getProject()).executeUpdate();
 		
 	}
 } 

@@ -9,11 +9,11 @@ use dbo;
 -- drop table project
 CREATE TABLE IF NOT EXISTS project (
     project_id INT AUTO_INCREMENT,
-    project VARCHAR(500) NOT NULL,
+    project VARCHAR(500),
     start_date DATE,
     end_date DATE,
-    priority TINYINT NOT NULL,
-    status TINYINT NOT NULL,
+    priority TINYINT,
+    status VARCHAR(500),
     PRIMARY KEY (project_id)
 ) ;
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS project (
 -- drop table parent_task
 CREATE TABLE IF NOT EXISTS parent_task (
     parent_id INT,
-    parent_task VARCHAR(500) NOT NULL,
+    parent_task VARCHAR(500) ,
     PRIMARY KEY (parent_id)
 ) ;
 /*
@@ -33,12 +33,12 @@ CREATE TABLE IF NOT EXISTS parent_task (
 CREATE TABLE IF NOT EXISTS task (
     task_id INT AUTO_INCREMENT,
     parent_id INT,
-    project_id INT NOT NULL,
-    task VARCHAR(500) NOT NULL,
+    project_id INT,
+    task VARCHAR(500),
     start_date DATE,
     end_date DATE,
-    priority TINYINT NOT NULL,
-    status TINYINT NOT NULL,
+    priority TINYINT,
+    status VARCHAR(500),
     PRIMARY KEY (task_id)
 ) ;
 /*

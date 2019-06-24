@@ -16,14 +16,27 @@ public class ProjectService {
 	public List<Project> getAllProjectData() {
 		return projectDAO.getAllProjects();
 	}
-	/*
-	@Autowired
-	public void addProject(Project project) {
-		//projectDAO.addProject(project);
+	public List<Project> sortBySDate() {
+		return projectDAO.sortBySDate();
+	}
+	public List<Project> sortByEDate() {
+		return projectDAO.sortByEDate();
+	}
+	public List<Project> sortByPriority() {
+		return projectDAO.sortByPriority();
+	}
+	public List<Project> sortByCompletion() {
+		return projectDAO.sortByCompletion();
 	}
 	
-	@Autowired
+	public void addProject(Project project) {
+		projectDAO.addProject(project);
+	}
+	
 	public void updateProject(Project project) {
-		//projectDAO.updateProject(project);
-	} */
+		projectDAO.updateProject(project);
+	} 
+	public void suspendProject(Project project) {
+		projectDAO.suspendProject(project);
+	} 
 } 

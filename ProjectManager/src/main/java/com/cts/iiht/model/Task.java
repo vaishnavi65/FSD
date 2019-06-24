@@ -28,7 +28,7 @@ public class Task {
 	@Column(name="priority")
     Integer priority;
 	@Column(name="status")
-    Integer task_status;
+	String task_status;
 	public Integer getTask_id() {
 		return task_id;
 	}
@@ -71,10 +71,10 @@ public class Task {
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-	public Integer getTaskStatus() {
+	public String getTaskStatus() {
 		return task_status;
 	}
-	public void setTaskStatus(Integer task_status) {
+	public void setTaskStatus(String task_status) {
 		this.task_status = task_status;
 	}
     
