@@ -8,6 +8,7 @@ com\cts\iiht\service\TaskService.class
 com\cts\iiht\model\ParentTask.class
 com\cts\iiht\config\DataConfig.class
 com\cts\iiht\service\ParentTaskService.class
+com\cts\iiht\model\AllProjectDetails.class
 com\cts\iiht\service\UserService.class
 com\cts\iiht\model\Project.class
 com\cts\iiht\service\ProjectService.class

@@ -1,5 +1,6 @@
 package com.cts.iiht.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cts.iiht.controller.ProjectManagerController;
+import com.cts.iiht.model.AllProjectDetails;
+import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Task;
 import com.cts.iiht.model.Users;
 @ComponentScan("com.cts.iiht")
@@ -47,6 +50,11 @@ public class UserDAO {
 		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL order by u.employee_id asc").list();
 		return (List<Users>) list;
 	}
+	
+	public List<Users> searchManagers() {
+		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT distinct u.first_name,u.last_name FROM Users u where u.first_name is not NULL order by u.first_name asc").list();
+		return (List<Users>) list;
+	}
 
 	@SuppressWarnings("unchecked")
 	public Users addUser(Users user) {
@@ -63,6 +71,35 @@ public class UserDAO {
 		}
 		return user;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void addUser(AllProjectDetails project) {
+		List<Users> list =(List<Users>)sessionFactory.getCurrentSession()
+				.createQuery("SELECT u FROM Users u where u.project_id=:id")
+				.setParameter("id",project.getProject_id()).list();
+		if(list.isEmpty())
+		{
+			int empId=(int) this.sessionFactory.getCurrentSession()
+					.createQuery("select u.employee_id from Users u where u.first_name=:name").setParameter("name", project.getManager_first_name())
+					.uniqueResult();
+			Users user=new Users();
+			user.setEmployee_id(empId);
+			user.setFirst_name(project.getManager_first_name());
+			user.setLast_name(project.getManager_last_name());
+			user.setProject_id(project.getProject_id());
+		sessionFactory.getCurrentSession().save(user);
+		}
+		else 
+		{
+			Users userToUpdate=list.get(0);
+			userToUpdate.setFirst_name(project.getManager_first_name());
+			userToUpdate.setLast_name(project.getManager_last_name());
+			userToUpdate.setProject_id(project.getProject_id());
+			updateUser(userToUpdate);
+		}
+		//return user;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void updateUser(Users user) {
 		this.sessionFactory.getCurrentSession()
@@ -78,30 +115,31 @@ public class UserDAO {
 		.createQuery("DELETE FROM Users u where u.first_name=:first and u.last_name=:last")
 		.setParameter("first", user.getFirst_name()).setParameter("last", user.getLast_name())
 		.executeUpdate();
-		/*if(!list.isEmpty())
+				
+	}
+	public List<AllProjectDetails> getManagerDetails(List<AllProjectDetails> details)
+	{
+		List<AllProjectDetails> returnList=new ArrayList<>();
+		for (AllProjectDetails detail:details)
 		{
-			logger.debug("the record that is being deleted is "+list.get(0).getFirst_name()+" "+list.get(0).getLast_name());
-			this.sessionFactory.getCurrentSession().delete(list.get(0));;
-		}*/
-		
-		
-		
+			String managerName=(String) this.sessionFactory.getCurrentSession()
+					.createQuery("select concat(u.first_name,' ',u.last_name) from Users u where u.project_id=:id")
+					.setParameter("id", detail.getProject_id()).uniqueResult();
+			if(managerName!=""&&managerName!=null)
+			{
+				String[] names=managerName.split(" ");
+				detail.setManager_first_name(names[0]);
+				detail.setManager_last_name(names[1]);
+			}
+			returnList.add(detail);
+			
+		}
+		return returnList;
 	}
-	/*
-	@SuppressWarnings("unchecked")
-	public Users findById(int id){
-		Users user =(Users) sessionFactory.getCurrentSession()
-					.createQuery("SELECT u FROM Users u where u.employee_id=:id")
-							.setParameter("id", id).list();
-			return user;
+	
+	public void updateUserInfoFromProjectDetails(AllProjectDetails detail)
+	{
+		addUser(detail);
 	}
-/*	
-@SuppressWarnings("unchecked")
-	public List<Users> findByFirstName(String first_name){
-	List<?> list =(List<?>) sessionFactory.getCurrentSession()
-					.createQuery("SELECT u FROM Users u where u.first_name LIKE :pname")
-							.setParameter("pname", "%"+first_name+"%").list();
-			return (List<Users>) list;
-	}*/
 	
 } 

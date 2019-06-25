@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cts.iiht.dao.ProjectDAO;
+import com.cts.iiht.dao.UserDAO;
+import com.cts.iiht.model.AllProjectDetails;
 import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Users;
 
@@ -13,27 +15,30 @@ import com.cts.iiht.model.Users;
 public class ProjectService {
 	@Autowired
 	private ProjectDAO projectDAO;
-	public List<Project> getAllProjectData() {
+	@Autowired
+	private UserDAO userDAO;
+	public List<AllProjectDetails> getAllProjectData() {
 		return projectDAO.getAllProjects();
 	}
-	public List<Project> sortBySDate() {
+	public List<AllProjectDetails> sortBySDate() {
 		return projectDAO.sortBySDate();
 	}
-	public List<Project> sortByEDate() {
+	public List<AllProjectDetails> sortByEDate() {
 		return projectDAO.sortByEDate();
 	}
-	public List<Project> sortByPriority() {
+	public List<AllProjectDetails> sortByPriority() {
 		return projectDAO.sortByPriority();
 	}
-	public List<Project> sortByCompletion() {
+	public List<AllProjectDetails> sortByCompletion() {
 		return projectDAO.sortByCompletion();
 	}
 	
-	public void addProject(Project project) {
+	public void addProject(AllProjectDetails project) {
 		projectDAO.addProject(project);
+				
 	}
 	
-	public void updateProject(Project project) {
+	public void updateProject(AllProjectDetails project) {
 		projectDAO.updateProject(project);
 	} 
 	public void suspendProject(Project project) {

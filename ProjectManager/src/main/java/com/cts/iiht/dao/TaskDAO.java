@@ -1,5 +1,6 @@
 package com.cts.iiht.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cts.iiht.model.AllProjectDetails;
 import com.cts.iiht.model.Task;
 
 @Repository
@@ -31,5 +33,24 @@ public class TaskDAO {
 	public void updateTask(Task task) {
 		sessionFactory.getCurrentSession().merge(task);
 		
+	}
+	
+	public List<AllProjectDetails> getTaskDetails(List<AllProjectDetails> details)
+	{
+		List<AllProjectDetails> projDetails=new ArrayList<AllProjectDetails>();
+		for(AllProjectDetails detail:details)
+		{
+			long totalTask=(long) this.sessionFactory.getCurrentSession()
+					.createQuery("select count(*) from Task t where t.project_id=:id").setParameter("id", detail.getProject_id())
+					.uniqueResult();
+			long completedTask=(long) this.sessionFactory.getCurrentSession()
+					.createQuery("select count(*) from Task t where t.project_id=:id and (t.end_date>=curdate() or t.task_status='Completed')").setParameter("id", detail.getProject_id())
+					.uniqueResult();
+			detail.setTotal_task(totalTask);
+			detail.setCompleted_task(completedTask);
+			projDetails.add(detail);
+		}
+		
+		return projDetails;
 	}
 }

@@ -3,6 +3,14 @@ table, td, th {
 	font-family:'Verdana';
   font-style: italic;
 }
- .time{
-   background-color: White;
+input[type="date"]{
+ background-color:White;
+ border: 1px solid black;
+}
+
+input[type=""]{
+ display: inline-block;
+  margin-bottom: 0px;
+  background-color: Gainsboro;
+  border: 0px none;
 }

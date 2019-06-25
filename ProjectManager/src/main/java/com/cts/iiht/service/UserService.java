@@ -50,16 +50,8 @@ public class UserService {
 		 userDAO.deleteUser(user);
 		
 	}
-	/*
 	@Autowired
-	public Users findById(int id)
-	{
-		return userDAO.findById(id);
+	public List<Users> searchManagers() {
+		return userDAO.searchManagers();
 	}
-	/*
-	@Autowired
-	public List<Users> findByFirstName(String first_name)
-	{
-		return userDAO.findByFirstName(first_name);
-	}*/
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.cts.iiht.model.AllProjectDetails;
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Task;
@@ -50,53 +51,55 @@ public class ProjectManagerController {
 
 		
 	@RequestMapping(value="/project/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Project>> getProjectDetails() {
-		List<Project> projects = projectService.getAllProjectData();
+	public ResponseEntity<List<AllProjectDetails>> getProjectDetails() {
+		List<AllProjectDetails> projects = projectService.getAllProjectData();
 		logger.debug("project details are "+projects);
-		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+		return new ResponseEntity<List<AllProjectDetails>>(projects,HttpStatus.OK);
  	}
 	@RequestMapping(value="/project/sortBySDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Project>> sortBySDate() {
-		List<Project> projects = projectService.sortBySDate();
+	public ResponseEntity<List<AllProjectDetails>> sortBySDate() {
+		List<AllProjectDetails> projects = projectService.sortBySDate();
 		logger.debug("project details are "+projects);
-		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+		return new ResponseEntity<List<AllProjectDetails>>(projects,HttpStatus.OK);
  	}
 	@RequestMapping(value="/project/sortByEDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Project>> sortByEDate() {
-		List<Project> projects = projectService.sortByEDate();
+	public ResponseEntity<List<AllProjectDetails>> sortByEDate() {
+		List<AllProjectDetails> projects = projectService.sortByEDate();
 		logger.debug("project details are "+projects);
-		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+		return new ResponseEntity<List<AllProjectDetails>>(projects,HttpStatus.OK);
  	}
 	@RequestMapping(value="/project/sortByPriority", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Project>> serachByPriority() {
-		List<Project> projects = projectService.sortByPriority();
+	public ResponseEntity<List<AllProjectDetails>> serachByPriority() {
+		List<AllProjectDetails> projects = projectService.sortByPriority();
 		logger.debug("project details are "+projects);
-		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+		return new ResponseEntity<List<AllProjectDetails>>(projects,HttpStatus.OK);
  	}
 	@RequestMapping(value="/project/sortByCompletion", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Project>> sortByCompletion() {
-		List<Project> projects = projectService.sortByCompletion();
+	public ResponseEntity<List<AllProjectDetails>> sortByCompletion() {
+		List<AllProjectDetails> projects = projectService.sortByCompletion();
 		logger.debug("project details are "+projects);
-		return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
+		return new ResponseEntity<List<AllProjectDetails>>(projects,HttpStatus.OK);
  	}
 	
 	@RequestMapping(value="/project/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	 public void addUser(@RequestBody Project project) throws IOException, SQLException {
+	 public void addProject(@RequestBody AllProjectDetails project) throws IOException, SQLException {
 		        logger.debug("project details"+project.getProject());
 		        projectService.addProject(project);
 		    }
 	@RequestMapping(value = "/project/update", method = RequestMethod.PUT,headers = "Accept=application/json")
-	public String updateUser(@RequestBody Project project) throws IOException, SQLException {	
+	public String updateProject(@RequestBody AllProjectDetails project) throws IOException, SQLException {	
 		logger.debug("User details"+project.getProject());
 		projectService.updateProject(project);
 		return "Success";
 	}
-	/*@RequestMapping(value = "/project/suspend", method = RequestMethod.PUT,headers = "Accept=application/json")
-	public String deleteUser(@RequestBody Project project) throws IOException, SQLException {		
-		logger.debug("project details"+project.getProject());
+	
+	@RequestMapping(value = "/project/suspend", method = RequestMethod.PUT,headers = "Accept=application/json")
+	public String suspendProject(@RequestBody Project project) throws IOException, SQLException {	
+		logger.debug("User details"+project.getProject());
 		projectService.suspendProject(project);
 		return "Success";
-	}*/
+	}
+	
 	@RequestMapping(value="/user/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Users>> getAllUsers() {
 		List<Users> users = userService.getAllUsers();
@@ -138,6 +141,12 @@ public class ProjectManagerController {
 		logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
 		userService.deleteUser(user);
 		return "Success";
+	}
+	@RequestMapping(value = "/user/searchManagers", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Users>> searchManagers(){		
+		List<Users> users=userService.searchManagers();
+		logger.debug("project details are "+users);
+		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
 	}
 	/*
     @RequestMapping(value = "/user/detail/{id}", method = RequestMethod.GET,headers = "Accept=application/json")
