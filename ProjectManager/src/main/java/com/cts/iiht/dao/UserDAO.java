@@ -37,22 +37,22 @@ public class UserDAO {
 	}
 	@SuppressWarnings("unchecked")
 	public List<Users> serachByFName() {
-		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL order by u.first_name asc").list();
+		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL group by u.employee_id order by u.first_name asc").list();
 		return (List<Users>) list;
 	}
 	@SuppressWarnings("unchecked")
 	public List<Users> serachByLName() {
-		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL order by u.last_name asc").list();
+		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL group by u.employee_id order by u.last_name asc").list();
 		return (List<Users>) list;
 	}
 	@SuppressWarnings("unchecked")
 	public List<Users> serachById() {
-		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL order by u.employee_id asc").list();
+		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not NULL group by u.employee_id order by u.employee_id asc").list();
 		return (List<Users>) list;
 	}
 	
 	public List<Users> searchManagers() {
-		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT distinct u.first_name,u.last_name FROM Users u where u.first_name is not NULL order by u.first_name asc").list();
+		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not null group by u.employee_id order by u.employee_id asc").list();
 		return (List<Users>) list;
 	}
 

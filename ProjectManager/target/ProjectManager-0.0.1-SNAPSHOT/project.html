@@ -168,7 +168,7 @@
             	  	$scope.searchManager = function() {
             		$http({
 	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/user/details'
+	                        url : 'http://localhost:8090/ProjectManager/user/searchManagers'
 	                    }).then(function successCallback(response) {
 	                        $scope.users = response.data;
 	                    }, function errorCallback(response) {
@@ -297,12 +297,18 @@
 			                		{
 			                		var method = "POST";
 				                    var url = 'http://localhost:8090/ProjectManager/project/add';
+				                    var name=$scope.manager;
+				                    var res=name.split(' ');
+				                    var fname=res[0];
+				                    var lname=res[1];
 				                    var data = {
 				                			   project:$scope.project_name,
 				                		       start_date: $scope.startDate,
 				                		       end_date:$scope.endDate,
 				                		       priority: $scope.priority_value,
-				                		       status: 'In Progress'
+				                		       status: 'In Progress',
+				                		       manager_first_name: fname,
+				                		       manager_last_name: lname
 				                		      };
 				                	 $http({
 				                        method : method,

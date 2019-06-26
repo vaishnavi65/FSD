@@ -168,7 +168,7 @@
             	  	$scope.searchManager = function() {
             		$http({
 	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/user/details'
+	                        url : 'http://localhost:8090/ProjectManager/user/searchManagers'
 	                    }).then(function successCallback(response) {
 	                        $scope.users = response.data;
 	                    }, function errorCallback(response) {
