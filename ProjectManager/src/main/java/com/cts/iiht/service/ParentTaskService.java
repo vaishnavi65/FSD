@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cts.iiht.dao.ParentTaskDAO;
+import com.cts.iiht.model.AllTaskDetails;
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
 
@@ -16,14 +17,14 @@ public class ParentTaskService {
 	public List<ParentTask> getAllParentTask() {
 		return parentTaskDAO.getAllParentTask();
 	}
-	/*
+	
 	@Autowired
-	public void addParentTask(ParentTask parentTask) {
+	public void addParentTask(AllTaskDetails parentTask) {
 		parentTaskDAO.addParentTask(parentTask);
 	}
 	
 	@Autowired
 	public void updateParentTask(ParentTask parentTask) {
 		parentTaskDAO.updateParentTask(parentTask);
-	} */
+	} 
 }

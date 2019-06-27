@@ -3,6 +3,7 @@ com\cts\iiht\dao\ParentTaskDAO.class
 com\cts\iiht\dao\TaskDAO.class
 com\cts\iiht\model\Users.class
 com\cts\iiht\controller\ProjectManagerController.class
+com\cts\iiht\model\AllTaskDetails.class
 com\cts\iiht\config\ApplicationConfig.class
 com\cts\iiht\service\TaskService.class
 com\cts\iiht\model\ParentTask.class

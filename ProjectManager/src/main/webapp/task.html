@@ -24,25 +24,54 @@
 			</td>
 		</tr>
 		<tr>
+		<td>
+		<B>Task:</B>
+			</td>
+			<td>
+			<input type="text" name="task_name" size="30" ng-model="task_name" required><br>
+		</td>
+		</tr>
+		<tr>
 			<td>
 			</td>
 			<td>
-			<input type="checkbox" ng-model="checkboxModel.flag"  ng-click="checkboxEnabled()"><font face="verdana" size="1"><I>Set Start and End Date </I></font>
-			<input type="date"  name="startDate" ng-model="startDate" ng-disabled="!checkboxModel.flag" >
-			<input type="date" name="endDate" ng-model="endDate"ng-disabled="!checkboxModel.flag" >
+			<input type="checkbox" ng-model="checkboxModel.flag"  ng-click="checkboxEnabled()"><font face="verdana" size="3"><I>Parent Task</I></font>
 			</td>
- 			</tr>
- 			<tr>
+			</tr>
+			<tr>
 			<td>
  				<B>Priority:</B>
 			</td>
 			<td>
-				<input type="range" name="range" ng-model="priority_value" min="0"  max="30">		
+				<input type="range" name="range"  ng-disabled="checkboxModel.flag"  ng-model="priority_value" min="0"  max="30">		
 			</td>
 		</tr>
 		<tr>
 			<td>
- 				<B>Manager:</B>
+ 				<B>Parent Task:</B>
+			</td>
+			<td>
+			<form>
+				<input list="ptList" type="" name="ptName"  size="20"  ng-model="ptName"  ng-disabled="searchpt.flag"  style="background-color: Gainsboro;border: 0px none;" >
+				<datalist id="ptList">
+                        <option ng-repeat="ptName in ptList" value="{{ptName.parent_task}}">
+                 </datalist>
+				<input name="doSearchpt"  ng-click="searchpt()"  ng-model="searchpt.flag"  ng-disabled="checkboxModel.flag" type="submit"  value="   Search  "  style="border-radius: 50%;background:white;">
+			</form>
+			</td>
+		</tr>
+			<tr>
+			<td>
+			<B>Start Date:</B>
+			</td>
+			<td>
+			<input type="date"  name="startDate" ng-model="startDate" ng-disabled="checkboxModel.flag" ><B>End Date:</B>
+			<input type="date" name="endDate" ng-model="endDate"ng-disabled="checkboxModel.flag" >
+			</td>
+ 			</tr>
+ 			<tr>
+			<td>
+ 				<B>User:</B>
 			</td>
 			<td>
 			<form>
@@ -50,7 +79,7 @@
 				<datalist id="userList">
                         <option ng-repeat="user in users" value="{{user.first_name+' '+ user.last_name}}">
                  </datalist>
-				<input name="doSearchMgr"  ng-click="searchManager()"  ng-model="searchuser.flag"  type="submit"  value="   Search  "  style="border-radius: 50%;background:white;">
+				<input name="doSearchMgr"  ng-click="searchManager()"  ng-disabled="checkboxModel.flag"  ng-model="searchuser.flag"  type="submit"  value="   Search  "  style="border-radius: 50%;background:white;">
 			</form>
 			</td>
 		</tr>
@@ -58,109 +87,11 @@
 			<td>
 			</td>
 			<td align="right">
-				<input name="doAdd" type="submit" value="{{ in_value}}"  ng-click="submitUser()">
+				<input name="doAdd" type="submit" value="    Add    "  ng-click="submitUser()">
   				<input name="doReset" type="reset" value="   Reset   " ng-click="resetUser()">						
 			</td>
 		</tr>
 	</table>
-</div>
-</form>
-<div>
-	<hr color="darkblue" width="35%"></hr>
-</div>
-<form>
-<div>
-<table>
-<tr>
-<td>
-<input type="text" name="searchNameViewname"  size="65" placeholder="Search...." ng-model="searchTextView"><BR>
-</td>
-</tr>
-<tr>
-<td>
-<font face="verdana" size="1"><I>  Sort By:</I></font>
-<input name="sortBySDate" type="submit" ng-click="doSortBySDate()"  value="  Start Date " >
-<input name="sortByEDate"type="submit" ng-click="doSortByEDate()"  value="  End Date ">
-<input name="sortByPriority"type="submit" ng-click="doSortByPriority()"  value="  Priority ">
-<input name="sortByCompleted"type="submit" ng-click="doSortByCompletion()"  value="  Completed  ">
-</td>
-</tr>
-</table>
-</div>
-</form>
-<form>
-<div  ng-repeat="project in projects|filter:searchTextView">
-<font size="2" face="verdana"  font-style="italic"><I>
-    <table size="60">
-    <tr>
-    <td bgcolor="Gainsboro" >
-    <table>
-    <tr>
-    <td colspan=2>
-    <B>Project:</B>{{project.project}}
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <B>No of Tasks:</B>{{project.total_task}}
-    </td>
-    <td>
-     <B>Completed:</B>{{project.completed_task}}
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <B>Start Date:<B>{{project.start_date | date}} </B>
-    </td>
-    <td>
-    <B>End Date:<B>{{project.end_date | date}}
-    </td>
-    </tr>
-    </table>
-    <td>
-    <table>
-    <tr>
-    <td bgcolor="White">
-    <B>Priority</B>
-    </td>
-    </tr>
-    <tr>
-    <td bgcolor="Gainsboro">
-    <table>
-    <tr>
-    <td>
-       {{project.priority}}
-       </td>
-    </tr>
-    <tr>
-    <td>
-      </td>
-    </tr>
-    </table>
-     </td>
-    </tr>
-    </table>
-    </td>
-    <td>
-    <table>
-    <tr>
-    <td>
-    <input name="doUpdate"type="submit" ng-click="doUpdate(project)"  value=" Update "><br>
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <input name="doSuspend" type="submit" ng-click="doSuspend(project)"  value="Suspend">
-    </td>
-    </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
-    </I></font>
-    <div>
-	<hr style="border-top: dotted 1px;" width=35%"></hr>
-</div>
 </div>
 </form>
 <script>
@@ -170,8 +101,7 @@
             app.controller("TaskController", function($scope, $http) {
             	//Added to load the project details dynamically
             	$scope.in_value="    Add    ";
-            	_refreshUserData();
-            	  	$scope.searchManager = function() {
+            	 	$scope.searchManager = function() {
             		$http({
 	                        method : 'GET',
 	                        url : 'http://localhost:8090/ProjectManager/user/searchManagers'
@@ -191,140 +121,43 @@
 		                        console.log(response.statusText);
 		                    });
 		                };
-	                $scope.doSuspend = function(project) {
-	                	 var pName=project.project;
-	                	 var pStartDate=project.start_date;
-	                	 var pEndDate=project.end_date;
-	                	 var pPriority=project.priority;
-	                	 var method = "PUT";
-		                    var url = 'http://localhost:8090/ProjectManager/project/suspend';
-		                	   var data = {
-		                			   project:pName,
-		                		       start_date:pStartDate,
-		                		       end_date:pEndDate,
-		                		       priority:pPriority,
-		                		       status: 'Suspended'
-		                   };
-		                	 $http({
-		                        method : method,
-		                        url : url,
-		                        data :  JSON.stringify(data),
-		                        headers : {
-		                            'Content-Type' : 'application/json'
-		                        }
-		                    }).then( _success, _error );
-	                  };
-	                  
-	                  $scope.doUpdate = function(project) {
-	                	  $scope.project_name=project.project;
-	         		       $scope.startDate=new Date(project.start_date);
-	         		       $scope.endDate=new Date(project.end_date);
-	         		      $scope.priority_value=project.priority;
-	         		       $scope.manager=project.manager_first_name+' '+project.manager_last_name;
-		                	$scope.in_value="  Update  ";
-		                  };
-	          	$scope.doSortBySDate= function() 
-	               {
-	            	  $http({
-                        method : 'GET',
-                        url : 'http://localhost:8090/ProjectManager/project/sortBySDate'
-                    }).then(function successCallback(response) {
-                        $scope.projects = response.data;
-                    }, function errorCallback(response) {
-                        console.log(response.statusText);
-                    });
-	               };
-	               
-	               $scope.checkboxEnabled=function()
-	               {
-	            	   $scope.startDate=new Date();
-	            	   var today = new Date();
-	            	   var newdate = new Date();
-	            	    newdate.setDate(today.getDate()+1);
-	            	   $scope.endDate=newdate;
-	               };
-	              
-	               $scope.doSortByEDate = function() 
-		              {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByEDate'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		              };
-		             $scope.doSortByPriority = function() 
-		              {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByPriority'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		              };
-		             $scope.doSortByCompletion= function() 
-		             {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByCompletion'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		             };
-            	function _clearFormData() {
-            		 $scope.project_name="";
+		                $scope.searchpt= function() {
+		            		$http({
+			                        method : 'GET',
+			                        url : 'http://localhost:8090/ProjectManager/parentTask/details'
+			                    }).then(function successCallback(response) {
+			                        $scope.ptList = response.data;
+			                    }, function errorCallback(response) {
+			                        console.log(response.statusText);
+			                    });
+			                };
+	              	                            
+	             	function _clearFormData() {
+            		 $scope.projectNameL="";
+            		 $scope.task_name="";
       		       $scope.startDate="";
       		       $scope.endDate="";
-      		      $scope.priority_value=0;
+      		      $scope.ptName="";
       		    $scope.manager="";
 	              $scope.in_value="    Add    ";
+	              $scope.checkboxModel.flag=false;
 	                };
-	             function _refreshUserData() {
-		                    $http({
-		                        method : 'GET',
-		                        url : 'http://localhost:8090/ProjectManager/project/details'
-		                    }).then(function successCallback(response) {
-		                        $scope.projects = response.data;
-		                    }, function errorCallback(response) {
-		                        console.log(response.statusText);
-		                    });
-		                };
-		            function _success(response) {
-			                    _refreshUserData();
-			                    _clearFormData()
-			                };
-			         
-			         function _error(response) {
-			                	 _refreshUserData();
-			                    console.log(response.statusText);
+	                $scope.checkboxEnabled=function()
+		               {
+	                	$scope.checkboxModel.flag=true;
+		            	   var enabled=true;
+		               };
+
+	             function _error(response) {
+			                	  console.log(response.statusText);
 			                };
 			                $scope.submitUser = function() {
-			                	if($scope.startDate>$scope.endDate)
-			                		{
-			                		alert("select an end date greater than start date")
-			                		}
-			                	else
+			                	if($scope.checkboxModel.flag)
 			                		{
 			                		var method = "POST";
-				                    var url = 'http://localhost:8090/ProjectManager/project/add';
-				                    var name=$scope.manager;
-				                    var res=name.split(' ');
-				                    var fname=res[0];
-				                    var lname=res[1];
+				                    var url = 'http://localhost:8090/ProjectManager/parentTask/add';
 				                    var data = {
-				                			   project:$scope.project_name,
-				                		       start_date: $scope.startDate,
-				                		       end_date:$scope.endDate,
-				                		       priority: $scope.priority_value,
-				                		       status: 'In Progress',
-				                		       manager_first_name: fname,
-				                		       manager_last_name: lname
+				                    		parentTaskName: $scope.task_name
 				                		      };
 				                	 $http({
 				                        method : method,
@@ -336,7 +169,43 @@
 				                    }).then( _success, _error );
 				                	_clearFormData();
 			                		}
+			                	else{
+			                		if($scope.startDate>$scope.endDate)
+			                		{
+			                		alert("select an end date greater than start date")
+			                		}
+			                	else
+			                		{
+			                		var method = "POST";
+				                    var url = 'http://localhost:8090/ProjectManager/task/add';
+				                    var data = {
+				                    		task:$scope.task_name ,
+				                	        start_date:$scope.startDate,
+				                	        end_date:$scope.endDate,
+				                	        priority:$scope.priority_value,
+				                	        projName:$scope.projectNameL,
+				                	        userName:$scope.manager,
+				                	        parentTaskName:$scope.ptName,
+				                	        taskStatus:"In Progress",
+				                	         };
+				                	 $http({
+				                        method : method,
+				                        url : url,
+				                        data :  JSON.stringify(data),
+				                        headers : {
+				                            'Content-Type' : 'application/json'
+				                        }
+				                    }).then( _success, _error );
+				                	_clearFormData();
+				                	$scope.checkboxModel.flag=false;
+			                		}
+			                	}
+			                	
 				                	
+				                };
+				                function _success(response) {
+				                    _clearFormData()
+				                    $scope.checkboxModel.flag=false;
 				                };
          
          				                });

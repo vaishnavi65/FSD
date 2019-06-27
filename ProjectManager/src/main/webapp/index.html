@@ -2,65 +2,20 @@
 <head>
 <!--  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-route.min.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
 <title>Project Manager</title>
 </head>
 <body>
 <H1>Project Manager</H1>
-<BR>
-<div ng-app="myApp" ng-controller="myCtrl">
-<div class="tab"  ng-hide="index" >
-<a ng-click="showProj()" >Add Project</a>
-<a ng-click="showAddTask()">Add Task</a>
-<a ng-click="showAddUser()">Add User</a>
-<a ng-click="showViewTask()">View Task</a>
-</div>
-<div class="tabcontent"  ng-hide="project"  ng-include="'project.html'" ></div>
-<div class="tabcontent"  ng-hide="addTask"  ng-include="'task.html'"></div>
-<div class="tabcontent"  ng-hide="addUser"  ng-include="'user.html'"></div>
-<div class="tabcontent"  ng-hide="viewTask"   ng-include="'vTask.html'"></div>
-<script>
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) 
-{
-	$scope.index=false;
-	$scope.project=true;
-	$scope.addTask=true;
-	$scope.addUser=true;
-	$scope.viewTask=true;
-	
-	$scope.showProj = function() 
-	{
-		$scope.project=false;
-		$scope.addTask=true;
-		$scope.addUser=true;
-		$scope.viewTask=true;
-		$scope.color=tab1;
-		$scope.myStyle={"color" : "red"};
-    };
-	$scope.showAddTask = function() 
-	{
-		$scope.project=true;
-		$scope.addTask=false;
-		$scope.addUser=true;
-		$scope.viewTask=true;
-	};
-	$scope.showAddUser = function() 
-	{
-		$scope.project=true;
-		$scope.addTask=true;
-		$scope.addUser=false;
-		$scope.viewTask=true;
-    };
-	$scope.showViewTask = function() 
-	{
-		$scope.project=true;
-		$scope.addTask=true;
-		$scope.addUser=true;
-		$scope.viewTask=false;
-    };
-
-});
-</script> 
+</BR>
+<script type="text/ng-template" id="task.html"><H1>Hi1</H1> </script>
+<script type="text/ng-template" id="project.html"><H1>Hi2</H1></script>
+<script type="text/ng-template" id="user.html"><H1>Hi3</H1></script>
+<a href="#/project">Add Project</a>
+<a href="#/task">Add Task</a>
+<a href="#/user">Add User</a>
+<div ng-view></div>
+<script src="index.js"></script> 
 </body>
 </html>

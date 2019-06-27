@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.cts.iiht.model.AllTaskDetails;
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Task;
@@ -45,5 +46,12 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	public Users user() {
 		return new Users();
 	}
+	
+	@Bean
+	public AllTaskDetails taskDetails()
+	{
+		return new AllTaskDetails();
+	}
+	
 	
 }

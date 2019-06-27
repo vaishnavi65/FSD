@@ -37,6 +37,8 @@ public class ProjectDAO {
 		}
 		return projectDeatilList;
 	}
+	
+	
 	private List<AllProjectDetails> convertToProjDEtailList(List<Project> list) {
 		List<AllProjectDetails> projDetailList=new ArrayList<AllProjectDetails>();
 		
@@ -149,5 +151,37 @@ List<AllProjectDetails> projectDeatilList=new ArrayList<>();
 		.createQuery("UPDATE Project p set p.status=\'Suspended\' where p.project=:proj")
 		.setParameter("proj", project.getProject()).executeUpdate();
 		
+	}
+	@SuppressWarnings("unchecked")
+	public int getProjectIDByName(String projName) {
+		int id=0;
+		List<Project> list = (List<Project>)sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project=:name order by p.project asc")
+				.setParameter("name", projName).list();
+		if(list.isEmpty())
+		{
+			return id;
+		}
+		else
+		{
+			id=list.get(0).getProject_id();
+		}
+		
+		return id;
+	}
+	@SuppressWarnings("unchecked")
+	public String getProjectNameById(int id) {
+		String name="";
+		List<Project> list = (List<Project>)sessionFactory.getCurrentSession().createQuery("SELECT p FROM Project p where p.project_id=:id order by p.project asc")
+				             .setParameter("id", id).list();
+		if(list.isEmpty())
+		{
+			return name;
+		}
+		else
+		{
+			name=list.get(0).getProject();
+		}
+		
+		return name;
 	}
 } 

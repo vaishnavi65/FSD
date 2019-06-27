@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS project (
 */
 -- drop table parent_task
 CREATE TABLE IF NOT EXISTS parent_task (
-    parent_id INT,
+    parent_id INT AUTO_INCREMENT,
     parent_task VARCHAR(500) ,
     PRIMARY KEY (parent_id)
 ) ;

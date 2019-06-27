@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cts.iiht.model.AllProjectDetails;
+import com.cts.iiht.model.AllTaskDetails;
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
 import com.cts.iiht.model.Task;
@@ -168,18 +170,24 @@ public class ProjectManagerController {
 	}*/
 	
 	@RequestMapping(value="/task/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Task>> getAllTasks() {
-		List<Task> tasks = taskService.getAllTasks();
-		logger.debug("project details are "+tasks);
-		return new ResponseEntity<List<Task>>(tasks,HttpStatus.OK);
+	public ResponseEntity<List<AllTaskDetails>> getAllTasks(@RequestParam String projectName) {
+		List<AllTaskDetails> tasks = taskService.getAllTasks(projectName);
+		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
+	@RequestMapping(value="/task/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	 public void addTask(@RequestBody AllTaskDetails taskDetails) throws IOException, SQLException {
+		        taskService.addTask(taskDetails);
+		    }
 	
 	@RequestMapping(value="/parentTask/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ParentTask>> getAllParentTasks() {
 		List<ParentTask> parentTasks = parentTaskService.getAllParentTask();
-		logger.debug("project details are "+parentTasks);
 		return new ResponseEntity<List<ParentTask>>(parentTasks,HttpStatus.OK);
  	}
+	@RequestMapping(value="/parentTask/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	 public void addParentTask(@RequestBody AllTaskDetails taskDetails) throws IOException, SQLException {
+		        parentTaskService.addParentTask(taskDetails);
+		    }
 }
 
 
