@@ -2,23 +2,24 @@
 <head>
 <!--  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
 <title>Project Manager</title>
 </head>
 <body>
 <H1>Project Manager</H1>
-<BR>
-<div ng-app="myApp" ng-controller="myCtrl">
-<div class="tab"  ng-hide="index" >
-<a ng-click="showProj()" >Add Project</a>
-<a ng-click="showAddTask()">Add Task</a>
-<a ng-click="showAddUser()">Add User</a>
-<a ng-click="showViewTask()">View Task</a>
+</BR>
+<div id="mainWrapper" ng-app="myApp">
+    <div id="fixedContent">
+    <a href="/project">Add Project</a>
+<a href="ProjectManager/task">Add Task</a>
+<a href="ProjectManager/user">Add User</a>
+    </div>
+    <div id="wrapper">
+        <div id="routedContent"  ng-view></div>
+    </div>
 </div>
-<div class="tabcontent"  ng-hide="project"  ng-include="'project.html'" ></div>
-<div class="tabcontent"  ng-hide="addTask"  ng-include="'task.html'"></div>
-<div class="tabcontent"  ng-hide="addUser"  ng-include="'user.html'"></div>
-<div class="tabcontent"  ng-hide="viewTask"   ng-include="'vTask.html'"></div>
 <script src="index.js"></script> 
 </body>
 </html>

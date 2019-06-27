@@ -1,11 +1,8 @@
-<html>
-<head>
 	<link rel="stylesheet" type="text/css" href="User.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="project.css" media="screen" />
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <title>Adding a project</title>
-</head>
-<body ng-app="ProjectManagement" ng-controller="ProjectController">
+<div id="project" ng-app="ProjectManagement" ng-controller="ProjectController">
 <form>
 	<div>
 	<table border="0">
@@ -157,173 +154,10 @@
 </div>
 </div>
 </form>
+</div>
 <script>
  var app = angular.module("ProjectManagement", []);
          
             //Controller Part
-            app.controller("ProjectController", function($scope, $http) {
-            	//Added to load the project details dynamically
-            	$scope.in_value="    Add    ";
-            	_refreshUserData();
-            	  	$scope.searchManager = function() {
-            		$http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/user/searchManagers'
-	                    }).then(function successCallback(response) {
-	                        $scope.users = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-	                };
-	                $scope.doSuspend = function(project) {
-	                	 var pName=project.project;
-	                	 var pStartDate=project.start_date;
-	                	 var pEndDate=project.end_date;
-	                	 var pPriority=project.priority;
-	                	 var method = "PUT";
-		                    var url = 'http://localhost:8090/ProjectManager/project/suspend';
-		                	   var data = {
-		                			   project:pName,
-		                		       start_date:pStartDate,
-		                		       end_date:pEndDate,
-		                		       priority:pPriority,
-		                		       status: 'Suspended'
-		                   };
-		                	 $http({
-		                        method : method,
-		                        url : url,
-		                        data :  JSON.stringify(data),
-		                        headers : {
-		                            'Content-Type' : 'application/json'
-		                        }
-		                    }).then( _success, _error );
-	                  };
-	                  
-	                  $scope.doUpdate = function(project) {
-	                	  $scope.project_name=project.project;
-	         		       $scope.startDate=new Date(project.start_date);
-	         		       $scope.endDate=new Date(project.end_date);
-	         		      $scope.priority_value=project.priority;
-	         		       $scope.manager=project.manager_first_name+' '+project.manager_last_name;
-		                	$scope.in_value="  Update  ";
-		                  };
-	          	$scope.doSortBySDate= function() 
-	               {
-	            	  $http({
-                        method : 'GET',
-                        url : 'http://localhost:8090/ProjectManager/project/sortBySDate'
-                    }).then(function successCallback(response) {
-                        $scope.projects = response.data;
-                    }, function errorCallback(response) {
-                        console.log(response.statusText);
-                    });
-	               };
-	               
-	               $scope.checkboxEnabled=function()
-	               {
-	            	   $scope.startDate=new Date();
-	            	   var today = new Date();
-	            	   var newdate = new Date();
-	            	    newdate.setDate(today.getDate()+1);
-	            	   $scope.endDate=newdate;
-	               };
-	              
-	               $scope.doSortByEDate = function() 
-		              {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByEDate'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		              };
-		             $scope.doSortByPriority = function() 
-		              {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByPriority'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		              };
-		             $scope.doSortByCompletion= function() 
-		             {
-		            	 $http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/project/sortByCompletion'
-	                    }).then(function successCallback(response) {
-	                        $scope.projects = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-		             };
-            	function _clearFormData() {
-            		 $scope.project_name="";
-      		       $scope.startDate="";
-      		       $scope.endDate="";
-      		      $scope.priority_value=0;
-      		    $scope.manager="";
-	              $scope.in_value="    Add    ";
-	                };
-	             function _refreshUserData() {
-		                    $http({
-		                        method : 'GET',
-		                        url : 'http://localhost:8090/ProjectManager/project/details'
-		                    }).then(function successCallback(response) {
-		                        $scope.projects = response.data;
-		                    }, function errorCallback(response) {
-		                        console.log(response.statusText);
-		                    });
-		                };
-		            function _success(response) {
-			                    _refreshUserData();
-			                    _clearFormData()
-			                };
-			         
-			         function _error(response) {
-			                	 _refreshUserData();
-			                    console.log(response.statusText);
-			                };
-			                $scope.submitUser = function() {
-			                	if($scope.startDate>$scope.endDate)
-			                		{
-			                		alert("select an end date greater than start date")
-			                		}
-			                	else
-			                		{
-			                		var method = "POST";
-				                    var url = 'http://localhost:8090/ProjectManager/project/add';
-				                    var name=$scope.manager;
-				                    var res=name.split(' ');
-				                    var fname=res[0];
-				                    var lname=res[1];
-				                    var data = {
-				                			   project:$scope.project_name,
-				                		       start_date: $scope.startDate,
-				                		       end_date:$scope.endDate,
-				                		       priority: $scope.priority_value,
-				                		       status: 'In Progress',
-				                		       manager_first_name: fname,
-				                		       manager_last_name: lname
-				                		      };
-				                	 $http({
-				                        method : method,
-				                        url : url,
-				                        data :  JSON.stringify(data),
-				                        headers : {
-				                            'Content-Type' : 'application/json'
-				                        }
-				                    }).then( _success, _error );
-				                	_clearFormData();
-			                		}
-				                	
-				                };
-         
-         				                });
+            
 </script>
-</body>
-</html>
