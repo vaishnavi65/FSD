@@ -15,6 +15,25 @@ import com.cts.iiht.model.Task;
 public class TaskService {
 	@Autowired
 	private TaskDAO taskDAO;
+	@Autowired
+	AllTaskDetails taskDetails;
+	@Autowired
+	public List<AllTaskDetails> getAllTasksSortBySDate(String projectName) {
+		return taskDAO.getAllTasksSortBySDate(projectName);
+	}
+	@Autowired
+	public List<AllTaskDetails> getAllTasksSortByEDate(String projectName) {
+		return taskDAO.getAllTasksSortByEDate(projectName);
+	}
+	@Autowired
+	public List<AllTaskDetails> getAllTasksSortByPriority(String projectName) {
+		return taskDAO.getAllTasksSortByPriority(projectName);
+	}
+	@Autowired
+	public List<AllTaskDetails> getAllTasksSortByCompleted(String projectName) {
+		return taskDAO.getAllTasksSortByCompleted(projectName);
+	}
+	@Autowired
 	public List<AllTaskDetails> getAllTasks(String projectName) {
 		return taskDAO.getAllTasks(projectName);
 	}

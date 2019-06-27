@@ -1,12 +1,8 @@
-<html>
-<head>
     <link rel="stylesheet" type="text/css" href="User.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="project.css" media="screen" />
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<title>Add a task</title>
-</head>
-<body ng-app="TaskManagement" ng-controller="TaskController">
-<div id="task">
+<div id="task"  ng-app="TaskManagement" ng-controller="TaskController">
 <form>
 	<div>
 	<table border="0">
@@ -100,117 +96,5 @@
  var app = angular.module("TaskManagement", []);
          
             //Controller Part
-            app.controller("TaskController", function($scope, $http) {
-            	//Added to load the project details dynamically
-            	$scope.in_value="    Add    ";
-            	 	$scope.searchManager = function() {
-            		$http({
-	                        method : 'GET',
-	                        url : 'http://localhost:8090/ProjectManager/user/searchManagers'
-	                    }).then(function successCallback(response) {
-	                        $scope.users = response.data;
-	                    }, function errorCallback(response) {
-	                        console.log(response.statusText);
-	                    });
-	                };
-	                $scope.searchprojectNameL= function() {
-	            		$http({
-		                        method : 'GET',
-		                        url : 'http://localhost:8090/ProjectManager/project/details'
-		                    }).then(function successCallback(response) {
-		                        $scope.projectNameList = response.data;
-		                    }, function errorCallback(response) {
-		                        console.log(response.statusText);
-		                    });
-		                };
-		                $scope.searchpt= function() {
-		            		$http({
-			                        method : 'GET',
-			                        url : 'http://localhost:8090/ProjectManager/parentTask/details'
-			                    }).then(function successCallback(response) {
-			                        $scope.ptList = response.data;
-			                    }, function errorCallback(response) {
-			                        console.log(response.statusText);
-			                    });
-			                };
-	              	                            
-	             	function _clearFormData() {
-            		 $scope.projectNameL="";
-            		 $scope.task_name="";
-      		       $scope.startDate="";
-      		       $scope.endDate="";
-      		      $scope.ptName="";
-      		    $scope.manager="";
-	              $scope.in_value="    Add    ";
-	              $scope.checkboxModel.flag=false;
-	                };
-	                $scope.checkboxEnabled=function()
-		               {
-	                	$scope.checkboxModel.flag=true;
-		            	   var enabled=true;
-		               };
-
-	             function _error(response) {
-			                	  console.log(response.statusText);
-			                };
-			                $scope.submitUser = function() {
-			                	if($scope.checkboxModel.flag)
-			                		{
-			                		var method = "POST";
-				                    var url = 'http://localhost:8090/ProjectManager/parentTask/add';
-				                    var data = {
-				                    		parentTaskName: $scope.task_name
-				                		      };
-				                	 $http({
-				                        method : method,
-				                        url : url,
-				                        data :  JSON.stringify(data),
-				                        headers : {
-				                            'Content-Type' : 'application/json'
-				                        }
-				                    }).then( _success, _error );
-				                	_clearFormData();
-			                		}
-			                	else{
-			                		if($scope.startDate>$scope.endDate)
-			                		{
-			                		alert("select an end date greater than start date")
-			                		}
-			                	else
-			                		{
-			                		var method = "POST";
-				                    var url = 'http://localhost:8090/ProjectManager/task/add';
-				                    var data = {
-				                    		task:$scope.task_name ,
-				                	        start_date:$scope.startDate,
-				                	        end_date:$scope.endDate,
-				                	        priority:$scope.priority_value,
-				                	        projName:$scope.projectNameL,
-				                	        userName:$scope.manager,
-				                	        parentTaskName:$scope.ptName,
-				                	        taskStatus:"In Progress",
-				                	         };
-				                	 $http({
-				                        method : method,
-				                        url : url,
-				                        data :  JSON.stringify(data),
-				                        headers : {
-				                            'Content-Type' : 'application/json'
-				                        }
-				                    }).then( _success, _error );
-				                	_clearFormData();
-				                	$scope.checkboxModel.flag=false;
-			                		}
-			                	}
-			                	
-				                	
-				                };
-				                function _success(response) {
-				                    _clearFormData()
-				                    $scope.checkboxModel.flag=false;
-				                };
-         
-         				                });
+          
 </script>
-</body>
-</html>

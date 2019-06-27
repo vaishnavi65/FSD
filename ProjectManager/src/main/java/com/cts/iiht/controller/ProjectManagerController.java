@@ -174,6 +174,28 @@ public class ProjectManagerController {
 		List<AllTaskDetails> tasks = taskService.getAllTasks(projectName);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
+	
+	@RequestMapping(value="/task/details/sortBySDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortBySDate(@RequestParam String projectName) {
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortBySDate(projectName);
+		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/task/details/sortByEDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByEDate(@RequestParam String projectName) {
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByEDate(projectName);
+		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/task/details/sortByPriority", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByPriority(@RequestParam String projectName) {
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByPriority(projectName);
+		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
+ 	}
+	@RequestMapping(value="/task/details/sortByCompleted", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByCompleted(@RequestParam String projectName) {
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByCompleted(projectName);
+		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
+ 	}
+	
 	@RequestMapping(value="/task/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	 public void addTask(@RequestBody AllTaskDetails taskDetails) throws IOException, SQLException {
 		        taskService.addTask(taskDetails);

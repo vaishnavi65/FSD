@@ -13,8 +13,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'user.html',
             controller:'UserController'
         })
-        .when('/page4',{
-            templateUrl: 'page4.html'
+        .when('vTask',{
+            templateUrl: 'vTask.html',
+            controller:'vTaskController'
+            	
         })
         .otherwise({
             redirectTo: '/project'
