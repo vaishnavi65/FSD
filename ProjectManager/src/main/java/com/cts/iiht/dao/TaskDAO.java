@@ -29,9 +29,9 @@ public class TaskDAO {
 	@Autowired
     private SessionFactory sessionFactory;
 	@SuppressWarnings("unchecked")
-	public List<AllTaskDetails> getAllTasks(String projectName) {
-		int projId=projDAO.getProjectIDByName(projectName);
-		List<Task> list = sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id order by t.task_id asc")
+	public List<AllTaskDetails> getAllTasks(AllTaskDetails taskDetails) {
+		int projId=projDAO.getProjectIDByName(taskDetails.getProjName());
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id order by t.task_id asc")
 				.setParameter("id", projId)
 				.list();
 		List<AllTaskDetails> listWithProjDetails=new ArrayList<AllTaskDetails>() ;
@@ -53,9 +53,10 @@ public class TaskDAO {
 		}
 		return  listWithProjDetails;
 	}
-	public List<AllTaskDetails> getAllTasksSortBySDate(String projectName) {
-		int projId=projDAO.getProjectIDByName(projectName);
-		List<Task> list = sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id order by t.start_date asc")
+	public List<AllTaskDetails> getAllTasksSortBySDate(AllTaskDetails taskDetails) {
+		int projId=projDAO.getProjectIDByName(taskDetails.getProjName());
+		@SuppressWarnings("unchecked")
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id and t.task_status!='Completed' order by t.start_date asc")
 				.setParameter("id", projId)
 				.list();
 		List<AllTaskDetails> listWithProjDetails=new ArrayList<AllTaskDetails>() ;
@@ -77,9 +78,10 @@ public class TaskDAO {
 		}
 		return  listWithProjDetails;
 	}
-	public List<AllTaskDetails> getAllTasksSortByEDate(String projectName) {
-		int projId=projDAO.getProjectIDByName(projectName);
-		List<Task> list = sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id order by t.end_date asc")
+	public List<AllTaskDetails> getAllTasksSortByEDate(AllTaskDetails taskDetails) {
+		int projId=projDAO.getProjectIDByName(taskDetails.getProjName());
+		@SuppressWarnings("unchecked")
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id and t.task_status!='Completed' order by t.end_date asc")
 				.setParameter("id", projId)
 				.list();
 		List<AllTaskDetails> listWithProjDetails=new ArrayList<AllTaskDetails>() ;
@@ -101,9 +103,10 @@ public class TaskDAO {
 		}
 		return  listWithProjDetails;
 	}
-	public List<AllTaskDetails> getAllTasksSortByPriority(String projectName) {
-		int projId=projDAO.getProjectIDByName(projectName);
-		List<Task> list = sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id order by t.priority asc")
+	public List<AllTaskDetails> getAllTasksSortByPriority(AllTaskDetails taskDetails) {
+		int projId=projDAO.getProjectIDByName(taskDetails.getProjName());
+		@SuppressWarnings("unchecked")
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id and t.task_status!='Completed' order by t.priority asc")
 				.setParameter("id", projId)
 				.list();
 		List<AllTaskDetails> listWithProjDetails=new ArrayList<AllTaskDetails>() ;
@@ -125,9 +128,9 @@ public class TaskDAO {
 		}
 		return  listWithProjDetails;
 	}
-	public List<AllTaskDetails> getAllTasksSortByCompleted(String projectName) {
-		int projId=projDAO.getProjectIDByName(projectName);
-		List<Task> list = sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id and t.task_status=\'Completed\' order by t.task_id asc")
+	public List<AllTaskDetails> getAllTasksSortByCompleted(AllTaskDetails taskDetails) {
+		int projId=projDAO.getProjectIDByName(taskDetails.getProjName());
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.project_id=:id and t.task_status=\'Completed\' order by t.task_id asc")
 				.setParameter("id", projId)
 				.list();
 		List<AllTaskDetails> listWithProjDetails=new ArrayList<AllTaskDetails>() ;

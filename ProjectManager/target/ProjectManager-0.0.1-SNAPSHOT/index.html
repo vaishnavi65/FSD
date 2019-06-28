@@ -1,29 +1,34 @@
 <html>
 <head>
-    <link href="index.css" rel="stylesheet">
-    <title>Project Manager</title>
+<link href="index.css" rel="stylesheet">
+<title>Project Manager</title>
 </head>
 <body>
 <div id="mainWrapper" ng-app="mainApp">
-    <div id="fixedContent">
- <H1 align="left">Project Manager</H1>
-</BR>
-            <a href="#project">Add Project</a>
-            <a href="#task">Add Task</a>
-            <a href="#user">Add User</a>
-            <a href="#page4">Page4</a>
-      
-    </div>
-    <div id="wrapper">
-        <div id="routedContent" ng-view></div>
-    </div>
+<table>
+<tr>
+<td>
+ <div id="fixedContent">
+ <H1 align="left">Project Manager</H1><br>
+ <a href="#project">Add Project</a>
+ <a href="#task">Add Task</a>
+ <a href="#user">Add User</a>
+ <a href="#vTask">View Task</a>
 </div>
-
+</td>
+</tr>
+<tr>
+<td>
+<div id="wrapper">
+<div id="routedContent" ng-view></div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.js"></script>
- 
-<script src="index.js"></script>
- 
-</body>
+ <script src="index.js"></script>
+ </body>
 </html>

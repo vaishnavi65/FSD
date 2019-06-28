@@ -32,47 +32,48 @@
 	</table>
 </div>
 </form>
+</br>
 <div>
-	<hr color="darkblue" width="35%"></hr>
+	<hr color="darkblue" width="80%"></hr>
 </div>
+</br>
 <form>
 <div  ng-repeat="task in taskDetails">
-<font size="2" face="verdana"  font-style="italic"><I>
-    <table size="60">
-    <tr>
-    <td >
-    <B>Project</B>
+ <table style="border: 50px none;">
+    <tr align="left">
+    <td width="30">
+    <B>Task</B>
     </td>
-     <td>
-    <B>Parent</B>
+     <td width="30">
+    <B>Parent Task</B>
     </td>
     <td>
     <B>Priority</B>
     </td>
-    <td>
-    <B>Start</B>
+    <td width="20">
+    <B>Start </B>
     </td>
-    <td>
+    <td width="20">
     <B>End</B>
     </td>
     <td></td>
     <td></td>
     </tr>
-    <tr>
-  <td>
-  {{task.projName}}
+    <tr align="left">
+  <td style="background-color: Gainsboro;">
+  {{task.task}}
   </td>
-  <td>
+  <td style="background-color: Gainsboro;">
   {{task.parentTaskName}}
   </td>
   <td>
   {{task.priority}}
   </td>
   <td>
-  {{task.start_date|date}}
+  {{task.start_date|date:'dd/MM/yyyy'}}
   </td>
   <td>
-  {{task.end_date|date}}
+  {{task.end_date|date:'dd/MM/yyyy'}}
   </td>
     <td>
     <input name="doUpdate"type="submit" ng-click="doUpdate(task)"  value=" Edit "><br>
@@ -82,9 +83,11 @@
     </td>
     </tr>
     </table>
+    </br>
      <div>
 	<hr style="border-top: dotted 1px;" width=35%"></hr>
 </div>
+</br>
 </div>
 </form>
 </div>
@@ -97,50 +100,66 @@ app.controller("vTaskController", function($scope, $http) {
 	
 	$scope.searchprojectNameL= function() {
 		$http({
-                method : 'GET',
-                url : 'http://localhost:8090/ProjectManager/project/details'
-            }).then(function successCallback(response) {
-                $scope.projectNameList = response.data;
-            }, function errorCallback(response) {
-                console.log(response.statusText);
-            });
+            method : 'GET',
+            url : 'http://localhost:8090/ProjectManager/project/details'
+        }).then(function successCallback(response) {
+            $scope.projectNameList = response.data;
+        }, function errorCallback(response) {
+            console.log(response.statusText);
+        });
         };
         $scope.doEnd = function(task) {
+        	console.log("hi I m here end project function]");
+        	var cTask=task.task;
+       	 var cstart_date=task.start_date;
+       	 var cend_date=task.end_date;
+       	 var cPriority=task.priority;
+       	 var cprojName=task.projName;
+       	 var cuserName=task.userName;
+       	 var cparentTaskName=task.parentTaskName;
         	 var method = "POST";
         	 var url = 'http://localhost:8090/ProjectManager/task/add';
         	 var data = {
-              		task:task.task_name ,
-          	        start_date:task.startDate,
-          	        end_date:task.endDate,
-          	        priority:task.priority_value,
-          	        projName:task.projectNameL,
-          	        userName:task.manager,
-          	        parentTaskName:task.ptName,
+              		task:cTask ,
+          	        start_date:cstart_date,
+          	        end_date:cend_date,
+          	        priority:cPriority,
+          	        projName:cprojName,
+          	        userName:cuserName,
+          	        parentTaskName:cparentTaskName,
           	        taskStatus:"Completed"
           	         };
-          	 $http({
-                  method : method,
-                  url : url,
-                  data :  JSON.stringify(data),
-                  headers : {
-                      'Content-Type' : 'application/json'
-                  }
-              }).then( _success, _error );
+        	 $http({
+                 method : method,
+                 url : url,
+                 data :  JSON.stringify(data),
+                 headers : {
+                     'Content-Type' : 'application/json'
+                 }
+             }).then( _success, _error );
+          	//_refreshUserData();
           };
         
           $scope.doUpdate = function(task) {
-        	  var method = "POST";
-         	 var url = 'http://localhost:8090/ProjectManager/task/add';
-         	var data = {
-        	    task:task.task_name ,
-    	        start_date:task.startDate,
-    	        end_date:task.endDate,
-    	        priority:task.priority_value,
-    	        projName:task.projectNameL,
-    	        userName:task.manager,
-    	        parentTaskName:task.ptName,
-    	        taskStatus:task.task_status
-         	};
+        	  var cTask=task.task;
+            	 var cstart_date=task.start_date;
+            	 var cend_date=task.end_date;
+            	 var cPriority=task.priority;
+            	 var cprojName=task.projName;
+            	 var cuserName=task.userName;
+            	 var cparentTaskName=task.parentTaskName;
+             	 var method = "POST";
+             	 var url = 'http://localhost:8090/ProjectManager/task/add';
+             	 var data = {
+                   		task:cTask ,
+               	        start_date:cstart_date,
+               	        end_date:cend_date,
+               	        priority:cPriority,
+               	        projName:cprojName,
+               	        userName:cuserName,
+               	        parentTaskName:cparentTaskName,
+    	                taskStatus:task.task_status
+         	               };
     	        $http({
                     method : method,
                     url : url,
@@ -152,9 +171,12 @@ app.controller("vTaskController", function($scope, $http) {
               };
   	$scope.doSortBySDate= function() 
        {
-    	  $http({
+  	
+  			var urltoHit='http://localhost:8090/ProjectManager/task/details/sortBySDate/'+$scope.projectNameL;
+   		 console.log(urltoHit);
+   	 $http({
             method : 'GET',
-            url : 'http://localhost:8090/ProjectManager/parentTask/details/SortBySDate?projectName='+$scope.projectNameL
+            url : urltoHit
         }).then(function successCallback(response) {
             $scope.taskDetails = response.data;
         }, function errorCallback(response) {
@@ -173,9 +195,11 @@ app.controller("vTaskController", function($scope, $http) {
       
        $scope.doSortByEDate = function() 
           {
-    	   $http({
-               method : 'GET',
-               url : 'http://localhost:8090/ProjectManager/parentTask/details/SortByEDate?projectName='+$scope.projectNameL
+    	   var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByEDate/'+$scope.projectNameL;
+  		 console.log(urltoHit);
+  	 $http({
+           method : 'GET',
+           url : urltoHit
            }).then(function successCallback(response) {
                $scope.taskDetails = response.data;
            }, function errorCallback(response) {
@@ -184,37 +208,42 @@ app.controller("vTaskController", function($scope, $http) {
           };
          $scope.doSortByPriority = function() 
           {
-        	  $http({
-                  method : 'GET',
-                  url : 'http://localhost:8090/ProjectManager/parentTask/details/SortByPriority?projectName='+$scope.projectNameL
-              }).then(function successCallback(response) {
-                  $scope.taskDetails = response.data;
-              }, function errorCallback(response) {
-                  console.log(response.statusText);
-              });
+        	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByPriority/'+$scope.projectNameL;
+    		 console.log(urltoHit);
+    	 $http({
+             method : 'GET',
+             url : urltoHit   
+             }).then(function successCallback(response) {
+                 $scope.taskDetails = response.data;
+             }, function errorCallback(response) {
+                 console.log(response.statusText);
+             });
           };
-         $scope.doSortByCompletion= function() 
+         $scope.doSortByCompletion= function()
          {
-        	  $http({
-                  method : 'GET',
-                  url : 'http://localhost:8090/ProjectManager/parentTask/details/SortByCompletion?projectName='+$scope.projectNameL
-              }).then(function successCallback(response) {
-                  $scope.taskDetails = response.data;
-              }, function errorCallback(response) {
-                  console.log(response.statusText);
-              });
+        	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByCompleted/'+$scope.projectNameL;
+    		 console.log(urltoHit);
+    	 $http({
+             method : 'GET',
+             url : urltoHit
+             }).then(function successCallback(response) {
+                 $scope.taskDetails = response.data;
+             }, function errorCallback(response) {
+                 console.log(response.statusText);
+             });
          };
 	
      function _refreshUserData() {
-    	 var name=$scope.projectNameL;
-    	  $http({
-              method : 'GET',
-              url : 'http://localhost:8090/ProjectManager/parentTask/details?projectName='+name
-          }).then(function successCallback(response) {
-              $scope.taskDetails = response.data;
-          }, function errorCallback(response) {
-              console.log(response.statusText);
-          });
+    	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByEDate/'+$scope.projectNameL;
+    		 console.log(urltoHit);
+    	 $http({
+             method : 'GET',
+             url : urltoHit
+            }).then(function successCallback(response) {
+             $scope.taskDetails = response.data;
+         }, function errorCallback(response) {
+             console.log(response.statusText);
+         });
             };
         function _success(response) {
                     _refreshUserData();

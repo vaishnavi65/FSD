@@ -18,24 +18,24 @@ public class TaskService {
 	@Autowired
 	AllTaskDetails taskDetails;
 	@Autowired
-	public List<AllTaskDetails> getAllTasksSortBySDate(String projectName) {
-		return taskDAO.getAllTasksSortBySDate(projectName);
+	public List<AllTaskDetails> getAllTasksSortBySDate(AllTaskDetails taskDetails) {
+		return taskDAO.getAllTasksSortBySDate(taskDetails);
 	}
 	@Autowired
-	public List<AllTaskDetails> getAllTasksSortByEDate(String projectName) {
-		return taskDAO.getAllTasksSortByEDate(projectName);
+	public List<AllTaskDetails> getAllTasksSortByEDate(AllTaskDetails taskDetails) {
+		return taskDAO.getAllTasksSortByEDate(taskDetails);
 	}
 	@Autowired
-	public List<AllTaskDetails> getAllTasksSortByPriority(String projectName) {
-		return taskDAO.getAllTasksSortByPriority(projectName);
+	public List<AllTaskDetails> getAllTasksSortByPriority(AllTaskDetails taskDetails) {
+		return taskDAO.getAllTasksSortByPriority(taskDetails);
 	}
 	@Autowired
-	public List<AllTaskDetails> getAllTasksSortByCompleted(String projectName) {
-		return taskDAO.getAllTasksSortByCompleted(projectName);
+	public List<AllTaskDetails> getAllTasksSortByCompleted(AllTaskDetails taskDetails) {
+		return taskDAO.getAllTasksSortByCompleted(taskDetails);
 	}
 	@Autowired
-	public List<AllTaskDetails> getAllTasks(String projectName) {
-		return taskDAO.getAllTasks(projectName);
+	public List<AllTaskDetails> getAllTasks(AllTaskDetails taskDetails) {
+		return taskDAO.getAllTasks(taskDetails);
 	}
 	@Autowired
 	public void addTask(AllTaskDetails taskDet) {

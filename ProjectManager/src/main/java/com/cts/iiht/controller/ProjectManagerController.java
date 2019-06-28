@@ -169,30 +169,40 @@ public class ProjectManagerController {
         return new ResponseEntity<Users>(currentUser, HttpStatus.OK);
 	}*/
 	
-	@RequestMapping(value="/task/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AllTaskDetails>> getAllTasks(@RequestParam String projectName) {
-		List<AllTaskDetails> tasks = taskService.getAllTasks(projectName);
+	@RequestMapping(value="/task/details/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasks(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setProjName(name);
+		List<AllTaskDetails> tasks = taskService.getAllTasks(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
 	
-	@RequestMapping(value="/task/details/sortBySDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortBySDate(@RequestParam String projectName) {
-		List<AllTaskDetails> tasks = taskService.getAllTasksSortBySDate(projectName);
+	@RequestMapping(value="/task/details/sortBySDate/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortBySDate(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setProjName(name);
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortBySDate(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
-	@RequestMapping(value="/task/details/sortByEDate", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByEDate(@RequestParam String projectName) {
-		List<AllTaskDetails> tasks = taskService.getAllTasksSortByEDate(projectName);
+	@RequestMapping(value="/task/details/sortByEDate/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByEDate(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setProjName(name);
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByEDate(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
-	@RequestMapping(value="/task/details/sortByPriority", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByPriority(@RequestParam String projectName) {
-		List<AllTaskDetails> tasks = taskService.getAllTasksSortByPriority(projectName);
+	@RequestMapping(value="/task/details/sortByPriority/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByPriority(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setProjName(name);
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByPriority(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
-	@RequestMapping(value="/task/details/sortByCompleted", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByCompleted(@RequestParam String projectName) {
-		List<AllTaskDetails> tasks = taskService.getAllTasksSortByCompleted(projectName);
+	@RequestMapping(value="/task/details/sortByCompleted/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AllTaskDetails>> getAllTasksSortByCompleted(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setProjName(name);
+		List<AllTaskDetails> tasks = taskService.getAllTasksSortByCompleted(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
  	}
 	
