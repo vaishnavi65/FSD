@@ -1,32 +1,41 @@
-var app = angular.module('mainApp',['ngRoute', 'ngAnimate']);
+var app = angular.module('mainApp',['ngRoute']);
  
-app.config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-        .when('/project',{
-            templateUrl: 'project.html'
-        })
-        .when('/task',{
-            templateUrl: 'task.html',
-            controller:'TaskController'
-        })
-        .when('/user',{
-            templateUrl: 'user.html',
-            controller:'UserController'
-        })
-        .when('vTask',{
-            templateUrl: 'vTask.html',
-            controller:'vTaskController'
-            	
-        })
-        .otherwise({
-            redirectTo: '/project'
-        });
- 
-    $locationProvider.hashPrefix('');
- 
-});
+app.config(['$locationProvider', function($locationProvider) {
+	  $locationProvider.hashPrefix('');
+	}]);
+
+	app.config(['$routeProvider',
+	  function ($routeProvider) {
+		 $routeProvider
+	        .when('/project',{
+	            templateUrl: 'project.html'
+	        })
+	        .when('/task',{
+	            templateUrl: 'task.html',
+	            controller:'TaskController'
+	        })
+	        .when('/user',{
+	            templateUrl: 'user.html',
+	            controller:'UserController'
+	        })
+	        .when('/vTask',{
+	            templateUrl: 'vTask.html',
+	            controller:'vTaskController'
+	            	
+	        })
+	          .when('/uTask',{
+	            templateUrl: 'uTask.html',
+	            controller:'uTaskController'
+	            	
+	        })
+	        .otherwise({
+	            redirectTo: '/project'
+	        });
+	  }
+	]);
+
 //Controller Part
-app.controller("UserController", function($scope, $http) {
+app.controller("UserController", function($scope, $http,$log) {
 	 _refreshUserData();
 	 $scope.in_value="    Add    ";
 	$scope.resetUser = function() {
@@ -43,7 +52,6 @@ app.controller("UserController", function($scope, $http) {
   	 var fname=user.first_name;
   	 var lname=user.last_name;
   	 var id=user.employee_id;
-  	 console.log(fname);
   	 var method = "DELETE";
           var url = 'http://localhost:8090/ProjectManager/user/delete';
       	   var data = {
@@ -90,7 +98,7 @@ app.controller("UserController", function($scope, $http) {
 			                    }).then(function successCallback(response) {
 			                        $scope.users = response.data;
 			                    }, function errorCallback(response) {
-			                        console.log(response.statusText);
+			                        $log.log(response.statusText);
 			                    });
 				               };
 				              $scope.doSortByLName = function() 
@@ -101,7 +109,7 @@ app.controller("UserController", function($scope, $http) {
 			                    }).then(function successCallback(response) {
 			                        $scope.users = response.data;
 			                    }, function errorCallback(response) {
-			                        console.log(response.statusText);
+			                        $log.log(response.statusText);
 			                    });
 				              };
 				             $scope.doSortById= function() 
@@ -112,7 +120,7 @@ app.controller("UserController", function($scope, $http) {
 			                    }).then(function successCallback(response) {
 			                        $scope.users = response.data;
 			                    }, function errorCallback(response) {
-			                        console.log(response.statusText);
+			                        $log.log(response.statusText);
 			                    });
 				             };
 				               function _refreshUserData() {
@@ -122,7 +130,7 @@ app.controller("UserController", function($scope, $http) {
 				                    }).then(function successCallback(response) {
 				                        $scope.users = response.data;
 				                    }, function errorCallback(response) {
-				                        console.log(response.statusText);
+				                        $log.log(response.statusText);
 				                    });
 				                }
 				               function _success(response) {
@@ -132,7 +140,7 @@ app.controller("UserController", function($scope, $http) {
 				         
 				                function _error(response) {
 				                	 _refreshUserData();
-				                    console.log(response.statusText);
+				                    $log.log(response.statusText);
 				                }
 				         
 				                //Clear the form
@@ -144,7 +152,7 @@ app.controller("UserController", function($scope, $http) {
 				                };
 
 				                });
-app.controller("ProjectController", function($scope, $http) {
+app.controller("ProjectController", function($scope, $http,$log) {
 	//Added to load the project details dynamically
 	$scope.in_value="    Add    ";
 	_refreshUserData();
@@ -155,7 +163,7 @@ app.controller("ProjectController", function($scope, $http) {
             }).then(function successCallback(response) {
                 $scope.users = response.data;
             }, function errorCallback(response) {
-                console.log(response.statusText);
+                $log.log(response.statusText);
             });
         };
         $scope.doSuspend = function(project) {
@@ -198,7 +206,7 @@ app.controller("ProjectController", function($scope, $http) {
         }).then(function successCallback(response) {
             $scope.projects = response.data;
         }, function errorCallback(response) {
-            console.log(response.statusText);
+            $log.log(response.statusText);
         });
        };
        
@@ -219,7 +227,7 @@ app.controller("ProjectController", function($scope, $http) {
             }).then(function successCallback(response) {
                 $scope.projects = response.data;
             }, function errorCallback(response) {
-                console.log(response.statusText);
+                $log.log(response.statusText);
             });
           };
          $scope.doSortByPriority = function() 
@@ -230,7 +238,7 @@ app.controller("ProjectController", function($scope, $http) {
             }).then(function successCallback(response) {
                 $scope.projects = response.data;
             }, function errorCallback(response) {
-                console.log(response.statusText);
+                $log.log(response.statusText);
             });
           };
          $scope.doSortByCompletion= function() 
@@ -241,7 +249,7 @@ app.controller("ProjectController", function($scope, $http) {
             }).then(function successCallback(response) {
                 $scope.projects = response.data;
             }, function errorCallback(response) {
-                console.log(response.statusText);
+                $log.log(response.statusText);
             });
          };
 	function _clearFormData() {
@@ -259,7 +267,7 @@ app.controller("ProjectController", function($scope, $http) {
                 }).then(function successCallback(response) {
                     $scope.projects = response.data;
                 }, function errorCallback(response) {
-                    console.log(response.statusText);
+                    $log.log(response.statusText);
                 });
             };
         function _success(response) {
@@ -269,7 +277,7 @@ app.controller("ProjectController", function($scope, $http) {
          
          function _error(response) {
                 	 _refreshUserData();
-                    console.log(response.statusText);
+                    $log.log(response.statusText);
                 };
                 $scope.submitUser = function() {
                 	if($scope.startDate>$scope.endDate)
@@ -308,9 +316,13 @@ app.controller("ProjectController", function($scope, $http) {
 
 				                });
 
-app.controller("TaskController", function($scope, $http) {
+app.controller("TaskController", function($scope, $http,$log) {
 	//Added to load the project details dynamically
 	$scope.in_value="    Add    ";
+	$scope.resetUser = function() {
+		_clearFormData();
+   };
+  // $scope.checkboxModel.flag=false;
 	 	$scope.searchManager = function() {
 		$http({
                 method : 'GET',
@@ -318,7 +330,7 @@ app.controller("TaskController", function($scope, $http) {
             }).then(function successCallback(response) {
                 $scope.users = response.data;
             }, function errorCallback(response) {
-                console.log(response.statusText);
+                $log.log(response.statusText);
             });
         };
         $scope.searchprojectNameL= function() {
@@ -328,7 +340,7 @@ app.controller("TaskController", function($scope, $http) {
                 }).then(function successCallback(response) {
                     $scope.projectNameList = response.data;
                 }, function errorCallback(response) {
-                    console.log(response.statusText);
+                    $log.log(response.statusText);
                 });
             };
             $scope.searchpt= function() {
@@ -338,7 +350,7 @@ app.controller("TaskController", function($scope, $http) {
                     }).then(function successCallback(response) {
                         $scope.ptList = response.data;
                     }, function errorCallback(response) {
-                        console.log(response.statusText);
+                        $log.log(response.statusText);
                     });
                 };
       	                            
@@ -359,7 +371,7 @@ app.controller("TaskController", function($scope, $http) {
            };
 
      function _error(response) {
-                	  console.log(response.statusText);
+                	  $log.log(response.statusText);
                 };
                 $scope.submitUser = function() {
                 	if($scope.checkboxModel.flag)
@@ -419,3 +431,206 @@ app.controller("TaskController", function($scope, $http) {
 	                };
 
 				                });
+
+app.controller("uTaskController", 
+	function($scope, $http, $routeParams, $location,$log)
+	 {    
+	$log.log($routeParams);
+	$log.log($routeParams.name);
+	_refreshTaskData()
+	 function _refreshTaskData() {
+		var task=JSON.parse('{"task_id":0,"project_id": 0,"task": "","start_date": "","end_date": "","priority":0,"projName": "","userName": null,"parentTaskName": "","parent_id": 0,"taskStatus": ""}');
+		 $http({
+             method : 'GET',
+             url : 'http://localhost:8090/ProjectManager/task/details/task/'+$routeParams.name
+         }).then(function successCallback(response) {
+        	task = response.data;
+        	$scope.projectNameL=task.projName;
+        	 $scope.task_name=task.task;
+   	       $scope.startDate=new Date(task.start_date);
+   	       $scope.endDate=new Date(task.end_date);
+   	      $scope.ptName=task.parentTaskName;
+   	    $scope.manager=task.userName;
+   	    $scope.range=task.priority;
+         }, function errorCallback(response) {
+             $log.log(response.statusText);
+         });      
+      };
+      function _error(response) {
+    	  $log.log(response.statusText);
+    };
+    $scope.submitUser = function() {
+
+    		if($scope.startDate>$scope.endDate)
+    		{
+    		alert("select an end date greater than start date")
+    		}
+    	else
+    		{
+    		var method = "POST";
+            var url = 'http://localhost:8090/ProjectManager/task/add';
+            var data = {
+            		task:$scope.task_name ,
+        	        start_date:$scope.startDate,
+        	        end_date:$scope.endDate,
+        	        priority:$scope.range,
+        	        projName:$scope.projectNameL,
+        	        userName:$scope.manager,
+        	        parentTaskName:$scope.ptName,
+        	        taskStatus: "In Progress"
+        	         };
+        	 $http({
+                method : method,
+                url : url,
+                data :  JSON.stringify(data),
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            }).then( _success, _error );
+        	
+    	}
+        };
+        
+        function _success(response) {
+        	 $location.path("/task");
+        };
+	});
+
+app.controller("vTaskController", function($scope, $http,$log) {
+	//Added to load the project details dynamically
+
+	 $scope.doUpdate=function(){
+		 window.location = "#/NewFile.html";
+	 };
+	$scope.in_value="    Add    ";
+
+	$scope.searchprojectNameL= function() {
+		$http({
+          method : 'GET',
+          url : 'http://localhost:8090/ProjectManager/project/details'
+      }).then(function successCallback(response) {
+          $scope.projectNameList = response.data;
+      }, function errorCallback(response) {
+          $log.log(response.statusText);
+      });
+      };
+      $scope.doEnd = function(task) {
+      	$log.log("hi I m here end project function]");
+      	var cTask=task.task;
+     	 var cstart_date=task.start_date;
+     	 var cend_date=task.end_date;
+     	 var cPriority=task.priority;
+     	 var cprojName=task.projName;
+     	 var cuserName=task.userName;
+     	 var cparentTaskName=task.parentTaskName;
+      	 var method = "POST";
+      	 var url = 'http://localhost:8090/ProjectManager/task/add';
+      	 var data = {
+            		task:cTask ,
+        	        start_date:cstart_date,
+        	        end_date:cend_date,
+        	        priority:cPriority,
+        	        projName:cprojName,
+        	        userName:cuserName,
+        	        parentTaskName:cparentTaskName,
+        	        taskStatus:"Completed"
+        	         };
+      	 $http({
+               method : method,
+               url : url,
+               data :  JSON.stringify(data),
+               headers : {
+                   'Content-Type' : 'application/json'
+               }
+           }).then( _success, _error );
+        	//_refreshUserData();
+        };
+      
+        
+	$scope.doSortBySDate= function() 
+     {
+	
+			var urltoHit='http://localhost:8090/ProjectManager/task/details/sortBySDate/'+$scope.projectNameL;
+ 		 $log.log(urltoHit);
+ 	 $http({
+          method : 'GET',
+          url : urltoHit
+      }).then(function successCallback(response) {
+          $scope.taskDetails = response.data;
+      }, function errorCallback(response) {
+          $log.log(response.statusText);
+      });
+     };
+     
+     $scope.checkboxEnabled=function()
+     {
+  	   $scope.startDate=new Date();
+  	   var today = new Date();
+  	   var newdate = new Date();
+  	    newdate.setDate(today.getDate()+1);
+  	   $scope.endDate=newdate;
+     };
+    
+     $scope.doSortByEDate = function() 
+        {
+  	   var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByEDate/'+$scope.projectNameL;
+		 $log.log(urltoHit);
+	 $http({
+         method : 'GET',
+         url : urltoHit
+         }).then(function successCallback(response) {
+             $scope.taskDetails = response.data;
+         }, function errorCallback(response) {
+             $log.log(response.statusText);
+         });
+        };
+       $scope.doSortByPriority = function() 
+        {
+      	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByPriority/'+$scope.projectNameL;
+  		 $log.log(urltoHit);
+  	 $http({
+           method : 'GET',
+           url : urltoHit   
+           }).then(function successCallback(response) {
+               $scope.taskDetails = response.data;
+           }, function errorCallback(response) {
+               $log.log(response.statusText);
+           });
+        };
+       $scope.doSortByCompletion= function()
+       {
+      	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByCompleted/'+$scope.projectNameL;
+  		 $log.log(urltoHit);
+  	 $http({
+           method : 'GET',
+           url : urltoHit
+           }).then(function successCallback(response) {
+               $scope.taskDetails = response.data;
+           }, function errorCallback(response) {
+               $log.log(response.statusText);
+           });
+       };
+	
+   function _refreshUserData() {
+  	 var urltoHit='http://localhost:8090/ProjectManager/task/details/sortByEDate/'+$scope.projectNameL;
+  		 $log.log(urltoHit);
+  	 $http({
+           method : 'GET',
+           url : urltoHit
+          }).then(function successCallback(response) {
+           $scope.taskDetails = response.data;
+       }, function errorCallback(response) {
+           $log.log(response.statusText);
+       });
+          };
+      function _success(response) {
+                  _refreshUserData();
+                  
+              };
+       
+       function _error(response) {
+              	 _refreshUserData();
+                  $log.log(response.statusText);
+              };
+
+				                });   

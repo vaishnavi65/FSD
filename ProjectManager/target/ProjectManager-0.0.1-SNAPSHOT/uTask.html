@@ -1,0 +1,81 @@
+    <link rel="stylesheet" type="text/css" href="User.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="project.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+	<title>Add a task</title>
+<div id="uTask"  ng-app="uTaskManagement" ng-controller="uTaskController">
+<form>
+	<div>
+	<table border="0">
+		<tr>
+			<td align="right">
+ 			<font align="right">	<B>Project:</B></font>
+			</td>
+			<td>
+				<input type="text" name="projectNameL"  size="20"  ng-model="projectNameL"  style="background-color: Gainsboro;border: 0px none;" readonly>
+			</td>
+		</tr>
+		<tr>
+		<td align="right">
+		<font align="right"><B>Task:</B></font>
+			</td>
+			<td>
+			<input type="text" name="task_name" size="30" ng-model="task_name"  required><br>
+		</td>
+		</tr>
+		<tr>
+			<td align="right">
+ 		<font align="right">	<B>Priority:</B></font>
+			</td>
+			<td>
+				<input type="range" name="range"  ng-model="range" min="0"  max="30">		
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+ 			<font align="right">	<B>Parent Task:</B></font>
+			</td>
+			<td>
+			<form>
+				<input list="ptList" type="" name="ptName"  size="20"  ng-model="ptName"  style="background-color: Gainsboro;border: 0px none;" >
+				<datalist id="ptList">
+                        <option ng-repeat="ptName in ptList" value="{{ptName.parent_task}}">
+                 </datalist>
+				<input name="doSearchpt"  ng-click="searchpt()"  ng-model="searchpt.flag"  type="submit"  value="   Search  "  style="border-radius: 50%;background:white;">
+			</form>
+			</td>
+		</tr>
+			<tr>
+			<td align="right">
+			<font align="right"><B>Start Date:</B></font>
+			</td>
+			<td>
+			<input type="date"  name="startDate" ng-model="startDate"" ><B>End Date:</B>
+			<input type="date" name="endDate" ng-model="endDate" >
+			</td>
+ 			</tr>
+ 			<tr>
+			<td>
+ 				<B>User:</B>
+			</td>
+			<td>
+		
+				<input type="text"  name="manager"  size="20"  ng-model="manager"  style="background-color: Gainsboro;border: 0px none;" readonly>
+	
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td align="right">
+				<input name="doAdd" type="submit" value="   Update  "  ng-click="submitUser()">
+  				<a ng-href="#task"><input name="doReset" type="reset" value="   Cancel  "></a>						
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+</div>
+<script>
+ var app = angular.module("uTaskManagement", []);
+</script>

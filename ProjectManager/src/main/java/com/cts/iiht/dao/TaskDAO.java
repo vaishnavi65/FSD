@@ -27,6 +27,8 @@ public class TaskDAO {
 	@Autowired
 	ParentTaskDAO pTaskDAO;
 	@Autowired
+	UserDAO userDAO;
+	@Autowired
     private SessionFactory sessionFactory;
 	@SuppressWarnings("unchecked")
 	public List<AllTaskDetails> getAllTasks(AllTaskDetails taskDetails) {
@@ -49,6 +51,7 @@ public class TaskDAO {
 			detail.setTask(task.getTask());
 			detail.setTask_id(task.getTask_id());
 			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByProjectId(projId));
 			listWithProjDetails.add(detail);
 		}
 		return  listWithProjDetails;
@@ -74,6 +77,7 @@ public class TaskDAO {
 			detail.setTask(task.getTask());
 			detail.setTask_id(task.getTask_id());
 			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByProjectId(projId));
 			listWithProjDetails.add(detail);
 		}
 		return  listWithProjDetails;
@@ -99,6 +103,7 @@ public class TaskDAO {
 			detail.setTask(task.getTask());
 			detail.setTask_id(task.getTask_id());
 			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByProjectId(projId));
 			listWithProjDetails.add(detail);
 		}
 		return  listWithProjDetails;
@@ -124,6 +129,7 @@ public class TaskDAO {
 			detail.setTask(task.getTask());
 			detail.setTask_id(task.getTask_id());
 			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByProjectId(projId));
 			listWithProjDetails.add(detail);
 		}
 		return  listWithProjDetails;
@@ -148,6 +154,7 @@ public class TaskDAO {
 			detail.setTask(task.getTask());
 			detail.setTask_id(task.getTask_id());
 			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByProjectId(projId));
 			listWithProjDetails.add(detail);
 		}
 		return  listWithProjDetails;
@@ -166,6 +173,7 @@ public class TaskDAO {
 		
 		if(!taskList.isEmpty())
 		{
+			
 			Task newTask=new Task();
 			newTask.setTask_id(taskList.get(0).getTask_id());
 			newTask.setParent_id(ptId);
@@ -174,11 +182,13 @@ public class TaskDAO {
 			newTask.setStart_date(taskDetails.getStart_date());
 			newTask.setEnd_date(taskDetails.getEnd_date());
 			newTask.setPriority(taskDetails.getPriority());
+			
 			updateTask(newTask);
 			
 		}
 		else
 		{
+			
 			Task newTask=new Task();
 			newTask.setParent_id(ptId);
 			newTask.setProject_id(projId);
@@ -187,6 +197,7 @@ public class TaskDAO {
 			newTask.setEnd_date(taskDetails.getEnd_date());
 			newTask.setPriority(taskDetails.getPriority());
 			newTask.setTaskStatus(taskDetails.getTaskStatus());
+			
 			sessionFactory.getCurrentSession().save(newTask);
 		}
 	
@@ -227,5 +238,32 @@ public class TaskDAO {
 		}
 		
 		return projDetails;
+	}
+	@SuppressWarnings("unchecked")
+	public AllTaskDetails getTaskDetail(AllTaskDetails taskDetails) {
+		List<Task> list = (List<Task>)sessionFactory.getCurrentSession().createQuery("SELECT t FROM Task t where t.task=:name order by t.start_date asc")
+				.setParameter("name", taskDetails.getTask())
+				.list();
+		if(list.isEmpty())
+		{
+			return null;
+		}
+		else {
+			Task task= list.get(0);
+			AllTaskDetails detail=new AllTaskDetails();
+			detail.setEnd_date(task.getEnd_date());
+			detail.setParent_id(task.getParent_id());
+			detail.setParentTaskName(pTaskDAO.getPTNameByPTId(task.getParent_id()));
+			detail.setPriority(task.getPriority());
+			detail.setProject_id(task.getProject_id());
+			detail.setProjName(projDAO.getProjectNameById(task.getProject_id()));
+			detail.setStart_date(task.getStart_date());
+			detail.setTask(task.getTask());
+			detail.setTask_id(task.getTask_id());
+			detail.setTaskStatus(task.getTaskStatus());
+			detail.setUserName(userDAO.getUserByTaskId(task.getTask_id()));
+			return detail;
+		}
+		
 	}
 }

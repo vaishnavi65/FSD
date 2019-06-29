@@ -42,6 +42,11 @@ public class TaskService {
 		taskDAO.addTask(taskDet);
 	}
 	
+	@Autowired
+	public AllTaskDetails getTaskDetail(AllTaskDetails taskDetails) {
+		return taskDAO.getTaskDetail(taskDetails);
+	}
+	
 /*	@Autowired
 	public void updateTask(Task task) {
 		taskDAO.updateTask(task);

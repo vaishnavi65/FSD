@@ -150,24 +150,6 @@ public class ProjectManagerController {
 		logger.debug("project details are "+users);
 		return new ResponseEntity<List<Users>>(users,HttpStatus.OK);
 	}
-	/*
-    @RequestMapping(value = "/user/detail/{id}", method = RequestMethod.GET,headers = "Accept=application/json")
-	public ResponseEntity<Users> findUserById(@PathVariable("id") int id) {
-    	Users users = userService.findById(id);
-		logger.debug("project details are "+users);
-		return new ResponseEntity<Users>(users,HttpStatus.OK);
-	}
-/*	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Users> findUserById(@PathVariable("id") int id) {
-		//String first_name=name;
-		Users currentUser=new Users();
-		currentUser = userService.findById(id);
-		
-		if (currentUser==null) {
-			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
-		}
-        return new ResponseEntity<Users>(currentUser, HttpStatus.OK);
-	}*/
 	
 	@RequestMapping(value="/task/details/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AllTaskDetails>> getAllTasks(@PathVariable String name) {
@@ -204,6 +186,14 @@ public class ProjectManagerController {
 		taskDetails.setProjName(name);
 		List<AllTaskDetails> tasks = taskService.getAllTasksSortByCompleted(taskDetails);
 		return new ResponseEntity<List<AllTaskDetails>>(tasks,HttpStatus.OK);
+ 	}
+	
+	@RequestMapping(value="/task/details/task/{name}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AllTaskDetails> getTaskDetail(@PathVariable String name) {
+		AllTaskDetails taskDetails=new AllTaskDetails();
+		taskDetails.setTask(name);
+		AllTaskDetails task = taskService.getTaskDetail(taskDetails);
+		return new ResponseEntity <AllTaskDetails>(task,HttpStatus.OK);
  	}
 	
 	@RequestMapping(value="/task/add", method = RequestMethod.POST, headers = "Accept=application/json")

@@ -51,6 +51,22 @@ public class UserDAO {
 		return (List<Users>) list;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public String getUserByProjectId(int project_id) {
+		String managerName=(String) this.sessionFactory.getCurrentSession()
+				.createQuery("select concat(u.first_name,' ',u.last_name) from Users u where u.project_id=:id")
+				.setParameter("id", project_id).uniqueResult();
+		return managerName;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String getUserByTaskId(int task_id) {
+		String managerName=(String) this.sessionFactory.getCurrentSession()
+				.createQuery("select concat(u.first_name,' ',u.last_name) from Users u where u.task_id=:id")
+				.setParameter("id", task_id).uniqueResult();
+		return managerName;
+	}
+	
 	public List<Users> searchManagers() {
 		List<?> list =sessionFactory.getCurrentSession().createQuery("SELECT u FROM Users u where u.first_name is not null group by u.employee_id order by u.employee_id asc").list();
 		return (List<Users>) list;
