@@ -3,32 +3,23 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cts.iiht.model.AllProjectDetails;
 import com.cts.iiht.model.AllTaskDetails;
 import com.cts.iiht.model.ParentTask;
 import com.cts.iiht.model.Project;
-import com.cts.iiht.model.Task;
 import com.cts.iiht.model.Users;
 import com.cts.iiht.service.ParentTaskService;
 import com.cts.iiht.service.ProjectService;
@@ -89,17 +80,17 @@ public class ProjectManagerController {
 		        projectService.addProject(project);
 		    }
 	@RequestMapping(value = "/project/update", method = RequestMethod.PUT,headers = "Accept=application/json")
-	public String updateProject(@RequestBody AllProjectDetails project) throws IOException, SQLException {	
+	public ResponseEntity<String> updateProject(@RequestBody AllProjectDetails project) throws IOException, SQLException {	
 		logger.debug("User details"+project.getProject());
 		projectService.updateProject(project);
-		return "Success";
+		return new ResponseEntity<String>("Success",HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/project/suspend", method = RequestMethod.PUT,headers = "Accept=application/json")
-	public String suspendProject(@RequestBody Project project) throws IOException, SQLException {	
+	public ResponseEntity<String> suspendProject(@RequestBody Project project) throws IOException, SQLException {	
 		logger.debug("User details"+project.getProject());
 		projectService.suspendProject(project);
-		return "Success";
+		return new ResponseEntity<String>("Success",HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/user/details", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -133,16 +124,16 @@ public class ProjectManagerController {
 		        return userService.addUser(user);
 		    }
 	@RequestMapping(value = "/user/update", method = RequestMethod.PUT,headers = "Accept=application/json")
-	public String updateUser(@RequestBody Users user) throws IOException, SQLException {	
+	public ResponseEntity<String> updateUser(@RequestBody Users user) throws IOException, SQLException {	
 		logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
 		userService.updateUser(user);
-		return "Success";
+		return new ResponseEntity<String>("Success",HttpStatus.OK);
 	}
-	@RequestMapping(value = "/user/delete", method = RequestMethod.DELETE,headers = "Accept=application/json")
-	public String deleteUser(@RequestBody Users user) throws IOException, SQLException {		
+	@RequestMapping(value = "/user/delete", method = RequestMethod.PUT,headers = "Accept=application/json")
+	public ResponseEntity<String> deleteUser(@RequestBody Users user) throws IOException, SQLException {		
 		logger.debug("User details"+user.getFirst_name()+" "+user.getLast_name());
 		userService.deleteUser(user);
-		return "Success";
+		return new ResponseEntity<String>("Success",HttpStatus.OK);
 	}
 	@RequestMapping(value = "/user/searchManagers", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Users>> searchManagers(){		

@@ -52,7 +52,7 @@ app.controller("UserController", function($scope, $http,$log) {
   	 var fname=user.first_name;
   	 var lname=user.last_name;
   	 var id=user.employee_id;
-  	 var method = "DELETE";
+  	 var method = "PUT";
           var url = 'http://localhost:8090/ProjectManager/user/delete';
       	   var data = {
       		  first_name: fname,

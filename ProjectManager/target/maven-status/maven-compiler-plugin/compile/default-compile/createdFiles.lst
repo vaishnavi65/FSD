@@ -5,6 +5,7 @@ com\cts\iiht\model\Users.class
 com\cts\iiht\controller\ProjectManagerController.class
 com\cts\iiht\model\AllTaskDetails.class
 com\cts\iiht\config\ApplicationConfig.class
+com\cts\iiht\junit\TestProjectManagerController.class
 com\cts\iiht\service\TaskService.class
 com\cts\iiht\model\ParentTask.class
 com\cts\iiht\config\DataConfig.class
