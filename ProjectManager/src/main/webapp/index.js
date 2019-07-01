@@ -345,8 +345,7 @@ app.controller("TaskController", function($scope, $http,$log) {
                 });
             };
             $scope.searchpt= function() {
-            	$log.log("Hehe I am here trying to invoke");
-                $http({
+            	 $http({
         			  method : 'GET',
                         url : 'http://localhost:8090/ProjectManager/parentTask/details'
                     }).then(function successCallback(response) {
@@ -498,6 +497,17 @@ app.controller("uTaskController",
         function _success(response) {
         	 $location.path("/task");
         };
+        
+        $scope.searchpt= function() {
+        	  $http({
+    			  method : 'GET',
+                    url : 'http://localhost:8090/ProjectManager/parentTask/details'
+                }).then(function successCallback(response) {
+                    $scope.ptList = response.data;
+                }, function errorCallback(response) {
+                    $log.log(response.statusText);
+                });
+            };
 	});
 
 app.controller("vTaskController", function($scope, $http,$log) {

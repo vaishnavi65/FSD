@@ -37,8 +37,8 @@
 			</td>
 			<td>
 			<form>
-				<input list="ptList" type="" name="ptName"  size="20"  ng-model="ptName"  style="background-color: Gainsboro;border: 0px none;" >
-				<datalist id="ptList">
+				<input list="ptListVal" type="" name="ptName"  size="20"  ng-model="ptName"  style="background-color: Gainsboro;border: 0px none;" >
+				<datalist id="ptListVal'>
                         <option ng-repeat="ptName in ptList" value="{{ptName.parent_task}}">
                  </datalist>
 				<input name="doSearchpt"  ng-click="searchpt()"  ng-model="searchpt.flag"  type="submit"  value="   Search  "  style="border-radius: 50%;background:white;">

@@ -49,7 +49,7 @@
 			</td>
 			<td>
 			<form>
-				<input list="ptListVal" type="" name="ptName"  size="20"  ng-model="ptName"  ng-disabled="searchpt.flag"  style="background-color: Gainsboro;border: 0px none;">
+				<input list="ptListVal" type="" name="ptName"  size="20"  ng-model="ptName"  ng-disabled="searchpt.flag"  style="background-color: Gainsboro;border: 0px none;" readonly>
 				<datalist id="ptListVal">
                         <option ng-repeat="ptName in ptList" value="{{ptName.parent_task}}">
                  </datalist>
