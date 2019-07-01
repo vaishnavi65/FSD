@@ -322,7 +322,8 @@ app.controller("TaskController", function($scope, $http,$log) {
 	$scope.resetUser = function() {
 		_clearFormData();
    };
-  // $scope.checkboxModel.flag=false;
+   var enabled=false;
+ // $scope.checkboxModel.flag=false;
 	 	$scope.searchManager = function() {
 		$http({
                 method : 'GET',
@@ -344,8 +345,9 @@ app.controller("TaskController", function($scope, $http,$log) {
                 });
             };
             $scope.searchpt= function() {
-        		$http({
-                        method : 'GET',
+            	$log.log("Hehe I am here trying to invoke");
+                $http({
+        			  method : 'GET',
                         url : 'http://localhost:8090/ProjectManager/parentTask/details'
                     }).then(function successCallback(response) {
                         $scope.ptList = response.data;
@@ -362,19 +364,23 @@ app.controller("TaskController", function($scope, $http,$log) {
 	      $scope.ptName="";
 	    $scope.manager="";
       $scope.in_value="    Add    ";
-      $scope.checkboxModel.flag=false;
+      if(enabled)
+    	  {
+    	  $scope.checkboxModel.flag=false;
+    	  }
+      
         };
         $scope.checkboxEnabled=function()
            {
         	$scope.checkboxModel.flag=true;
-        	   var enabled=true;
+        	   enabled=true;
            };
 
      function _error(response) {
                 	  $log.log(response.statusText);
                 };
                 $scope.submitUser = function() {
-                	if($scope.checkboxModel.flag)
+                	if(enabled)
                 		{
                 		var method = "POST";
 	                    var url = 'http://localhost:8090/ProjectManager/parentTask/add';
@@ -419,15 +425,13 @@ app.controller("TaskController", function($scope, $http,$log) {
 	                        }
 	                    }).then( _success, _error );
 	                	_clearFormData();
-	                	$scope.checkboxModel.flag=false;
-                		}
+	                	}
                 	}
                 	
 	                	
 	                };
 	                function _success(response) {
-	                    _clearFormData()
-	                    $scope.checkboxModel.flag=false;
+	                    _clearFormData();
 	                };
 
 				                });
